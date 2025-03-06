@@ -1,0 +1,13 @@
+---
+# Playbook for tasks on hosts shared between Galaxy servers (Slurm, CVMFS, etc.)
+
+- name: System tasks
+  hosts: all
+  roles:
+    - role: galaxyproject.general.packages
+    - role: galaxyproject.general.users
+    - role: galaxyproject.general.paths
+    - role: galaxyproject.general.copy
+    - role: galaxyproject.postfix
+  tags:
+    - system

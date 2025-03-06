@@ -1,0 +1,90 @@
+---
+
+postfix_root_address: "{{ vault_postfix_root_address }}"
+
+# This is used by a variety of galaxyproject.* roles
+pip_virtualenv_command: /usr/bin/python3 -m venv
+
+all_packages:
+  - zsh
+  - git
+  - tmux
+  - vim
+  - rsync
+  - make
+  - htop
+  - netcat
+  - strace
+
+local_users:
+  slurm:
+    name: slurm
+    uid: 180
+    group: slurm
+    comment: Slurm Workload Manager
+    home: /var/lib/slurm
+    shell: /bin/sh
+    local: true
+  postgres:
+    name: postgres
+    uid: 26
+    group: postgres
+    groups: G-803372
+    comment: PostgreSQL Server
+    home: /var/lib/pgsql
+    local: true
+
+local_groups:
+  # this is in LDAP but we need to create it locally to add service accounts to it
+  G_827737:
+    name: G-827737
+    gid: 827737
+    local: true
+  slurm:
+    name: slurm
+    gid: 180
+    local: true
+  postgres:
+    name: postgres
+    gid: 26
+    groups: G-827737
+    local: true
+
+all_users:
+  - "{{ local_users.slurm }}"
+
+all_groups:
+  - "{{ local_groups.slurm }}"
+
+#tacc_corral_gateway_address_default: 129.114.52.161
+
+#all_mounts:
+#  - src: "{{ tacc_corral_gateway_address | default(tacc_corral_gateway_address_default) }}:/corral/main/projects/cfde/"
+#    path: "{{ corral_root }}"
+#    fstype: nfs
+#    opts: "rw,nosuid,noatime,rsize=1048576,wsize=1048576,intr,nfsvers=3,tcp,soft,nolock,addr={{ tacc_corral_gateway_address | default(tacc_corral_gateway_address_default) }}"
+#    owner: ???
+#    group: ???
+
+postfix_role: "null-client"
+postfix_config:
+  compatibility_level: 2
+  myorigin: "$myhostname"
+  # aliases don't work if local transport is disabled - however you could use virtual instead
+  local_transport: "local:$myhostname"
+  mydestination: "$myhostname, localhost.$mydomain, localhost"
+  relayhost: "[relay02.tacc.utexas.edu]"
+  smtpd_relay_restrictions: "permit_mynetworks, reject"
+postfix_aliases:
+  mailer-daemon: postmaster
+  postmaster: root
+  nobody: root
+  postgres: root
+  gxsrc: root
+  gxadmin: root
+  g2test: root
+  g2main: root
+  root: "{{ postfix_root_address }}"
+
+galaxy_group: G-827737
+corral_root: /corral

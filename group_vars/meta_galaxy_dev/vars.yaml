@@ -1,0 +1,7 @@
+---
+
+galaxy_user: cfdegx
+galaxy_instance_codename: dev
+galaxy_instance_hostname: dev.cfdeworkbench.org
+galaxy_db_host: /var/run/postgresql
+galaxy_instance_root: /srv/galaxy/dev

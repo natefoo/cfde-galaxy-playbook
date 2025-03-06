@@ -1,0 +1,119 @@
+---
+# TACC hosts
+
+all:
+
+  #vars:
+  #  ansible_user: root
+
+  children:
+
+    # Provides dev-specific values for group vars
+    meta_galaxy_dev:
+      children:
+        galaxy_dev_servers:
+
+    # Provides prod-specific values for group vars
+    meta_galaxy_prod:
+      children:
+        galaxy_prod_servers:
+
+    # Deploys and configures telegraf
+    #telegraf_agents:
+
+    # Deploys PostgreSQL and gxadmin
+    galaxy_db_servers:
+      hosts:
+        #.tacc.utexas.edu:
+
+    # Deploys redis
+    galaxy_redis_servers:
+      children:
+        galaxy_servers:
+
+    # Not fully usable on its own but provides vars common to both ACME challenge methods
+    letsencrypt_clients:
+      children:
+        letsencrypt_dns01_clients:
+
+    # Provides Certbot config for DNS-01 challenges
+    letsencrypt_dns01_clients:
+      #children:
+      #  galaxy_servers:
+
+    # Provides the Certbot TSIG key for DNS-01 challenges
+    certbot_tsig_key_consumers:
+      children:
+        letsencrypt_dns01_clients:
+
+    # Sets some default variables for nginx package/config
+    web_servers:
+      children:
+        galaxy_servers:
+
+    # Deploys and configures RabbitMQ
+    rabbitmq_servers:
+      hosts:
+        #.tacc.utexas.edu:
+
+    # Creates:
+    # - local gxsrc user
+    # - telegraf plugins for Galaxy servers
+    # - install cvmfs_remount_sync and prefer TACC stratum 1
+    galaxy_servers:
+      children:
+        galaxy_dev_servers:
+        galaxy_prod_servers:
+
+    # Deploys cleanup cron jobs, removes any ansible_cron_galaxy_{{ galaxy_instance_codename }} jobs from other
+    # galaxy_servers
+    galaxy_cleanup_servers:
+      hosts:
+        #.tacc.utexas.edu:
+
+    galaxy_dev_servers:
+      hosts:
+        cfde-galaxy-dev.tacc.utexas.edu:
+
+    galaxy_prod_servers:
+      hosts:
+        cfde-galaxy.tacc.utexas.edu:
+
+    # Deploys CVMFS and configures as a client
+    cvmfs_clients:
+      children:
+        galaxy_vms:
+
+    # Deploys Slurm client and configuration
+    slurm_clients:
+      children:
+        galaxy_vms:
+
+    slurm_controllers:
+      hosts:
+        #.tacc.utexas.edu:
+
+    slurm_dbd_servers:
+      hosts:
+        #.tacc.utexas.edu:
+
+    # Configures as a cluster node
+    galaxy_nodes:
+      children:
+        cyclone_nodes:
+
+    # Galaxy hosts from the VM stack
+    galaxy_vms:
+      vars:
+        ansible_user: gxadm
+        ansible_become: true
+        ansible_ssh_executable: ./.ssh-keyboard-interactive
+      hosts:
+        #.tacc.utexas.edu:
+
+    # Galaxy nodes from the Cyclone cloud
+    cyclone_nodes:
+      vars:
+        ansible_user: root
+      hosts:
+        #foo: {ansible_host: 10.0.0.1}

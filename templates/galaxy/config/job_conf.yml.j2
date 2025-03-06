@@ -1,0 +1,41 @@
+---
+
+#
+# Job runner plugin configuration
+#
+runners:
+  local:
+    load: galaxy.jobs.runners.local:LocalJobRunner
+    workers: 2
+  slurm:
+    load: galaxy.jobs.runners.slurm:SlurmJobRunner
+    workers: 4
+    drmaa_library_path: /usr/lib/slurm-drmaa/lib/libdrmaa.so.1
+    invalidjobexception_retries: 5
+    internalexception_retries: 5
+
+handling:
+  assign:
+    - db-skip-locked
+  max_grab: 16
+  ready_window_size: 32
+
+execution:
+  default: tpv_dispatcher
+  environments:
+    local:
+      runner: local
+    tpv_dispatcher:
+      runner: dynamic
+      type: python
+      function: map_tool_to_destination
+      rules_module: tpv.rules
+      tpv_config_files:
+        - https://raw.githubusercontent.com/galaxyproject/tpv-shared-database/main/tools.yml
+        - "{{ tpv_config_dir }}/defaults.yaml"
+        - "{{ tpv_config_dir }}/environments.yaml"
+        - "{{ tpv_config_dir }}/tools.yaml"
+
+limits:
+  - type: registered_user_concurrent_jobs
+    value: 20

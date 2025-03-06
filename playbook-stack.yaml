@@ -1,0 +1,93 @@
+---
+# Install/Manage Galaxy stack
+
+- name: PostgreSQL
+  hosts: db_servers
+  pre_tasks:
+    - name: Install Dependencies
+      package:
+        name: "{{ all_packages + db_servers_packages }}"
+  roles:
+    - role: galaxyproject.postgresql
+    - role: galaxyproject.postgresql_objects
+      become: true
+      become_user: postgres
+  post_tasks:
+    # The postgres user needs to be added to the appropriate group(s) used for Corral quotas
+    # The group is in LDAP but has to exist locally to be able to add a local user to it
+    - name: Create local project group
+      group:
+        name: "{{ galaxy_instance_group }}"
+        gid: "{{ galaxy_instance_group[2:] }}"
+        local: true
+    - name: Add postgres user to project group
+      user:
+        name: postgres
+        groups: "{{ galaxy_instance_group }}"
+        local: true
+        system: true
+  tags:
+    - postgres
+
+- name: DRMAA for Slurm
+  hosts: galaxy_servers
+  tasks:
+    - name: Install slurm-drmaa
+      package:
+        name: "{{ slurm_drmaa_url }}"
+  tags:
+    - slurm
+
+- name: Galaxy Initial Setup
+  hosts: galaxyservers
+  pre_tasks:
+    # Pulled out of galaxyproject.galaxy until we make a collection out of its parts
+    - name: Install Dependencies
+      package:
+        name: "{{ all_packages + galaxy_servers_packages }}"
+    - name: Create Galaxy directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: 02770
+      loop: "{{ galaxy_precreate_dirs }}"
+      become: true
+      become_user: "{{ galaxy_user.name }}"
+  roles:
+    - role: galaxyproject.miniconda
+      become: yes
+      become_user: "{{ galaxy_user.name }}"
+    - role: galaxyproject.tusd
+  tags:
+    - galaxy
+
+- name: NGINX
+  hosts: galaxyservers
+  roles:
+    - role: galaxyproject.nginx
+  #post_tasks:
+  #  - name: Set nginx runtime group
+  #    lineinfile:
+  #      line: 'user www-data {{ galaxy_instance_group }};'
+  #      regexp: '^user .*;$'
+  #      path: /etc/nginx/nginx.conf
+  #    notify:
+  #      - restart nginx
+  tags:
+    - nginx
+
+- name: Galaxy post-install root
+  hosts: galaxyservers
+  roles:
+    - role: galaxyproject.galaxy
+      galaxy_manage_clone: no
+      galaxy_manage_static_setup: no
+      galaxy_manage_mutable_setup: no
+      galaxy_manage_database: no
+      galaxy_fetch_dependencies: no
+      galaxy_manage_errordocs: no
+      galaxy_build_client: no
+      galaxy_manage_systemd: yes
+      galaxy_manage_gravity: no
+      galaxy_manage_cleanup: yes
+  tags: galaxy, galaxy_post

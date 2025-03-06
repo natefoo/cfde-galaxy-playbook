@@ -1,23 +1,14 @@
-shared:
-	ansible-playbook --diff -i hosts-shared shared.yml
+HOSTNAME = $(shell hostname --fqdn)
 
-psu:
-	ansible-playbook --diff -i hosts-psu galaxy.yml
+sudo:
+	sudo -l
 
-psu-deps:
-	ansible-playbook --diff -i hosts-psu galaxy-deps.yml
+bootstrap: sudo
+	ansible-playbook -i inventory/cfde.yaml playbook-bootstrap.yaml --limit=$(HOSTNAME)
 
-psu-pulsar:
-	ansible-playbook --diff -i hosts-psu pulsar.yml
-
-lrn:
-	ansible-playbook --diff -i hosts-lrn galaxy.yml
-
-lrn-deps:
-	ansible-playbook --diff -i hosts-lrn galaxy-deps.yml
-
-lrn-pulsar:
-	ansible-playbook --diff -i hosts-lrn pulsar.yml
+stack: sudo
+	ansible-playbook -i inventory/cfde.yaml playbook-stack.yaml --limit=$(HOSTNAME)
 
 requirements:
-	ansible-galaxy role install -p roles -r requirements.yml
+	ansible-galaxy role install -p roles -r requirements.yaml
+	ansible-galaxy collection install -p collections -r requirements.yaml

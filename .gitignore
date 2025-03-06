@@ -1,3 +1,5 @@
+.vault-password.txt
 *.sw?
 
 roles/*.*
+collections/*

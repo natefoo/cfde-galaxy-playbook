@@ -16,28 +16,28 @@ postgresql_objects_databases:
 galaxy_db_servers_group_groups:
   - "{{ local_groups.postgres }}"
   # This is necessary for proper quota usage on Corral
-  #- "{{ local_groups.G_??? }}"
+  - "{{ local_groups.G_827737 }}"
 
 galaxy_db_servers_group_users:
   - "{{ local_users.postgres }}"
 
 postgresql_version: 17
 postgresql_create_backup_dir: false
-postgresql_backup_dir: "{{ corral_root }}/backup/pgsql/{{ galaxy_instance_codename }}"
+#postgresql_backup_dir: "{{ corral_root }}/backup/pgsql/{{ galaxy_instance_codename }}"
 
 postgresql_archive_wal_rsync_args: '--ignore-existing -pt --info=skip1'
-postgresql_backup_rsync_backup_opts: '-rpt --chown=postgres:{{ galaxy_group }}'
-postgresql_backup_hour: 7
-# sg is necessary because rsync copies with the default group and then performs a chown, which doesn't work for the way
-# quotas are calculated on Corral 4.
-postgresql_backup_command: >-
-  /usr/bin/sg {{ galaxy_group }} -c
-  "{{ postgresql_backup_local_dir | quote }}/bin/backup.py
-  {{ '--rsync-connect-opts ' ~ (postgresql_backup_rsync_connect_opts | quote) if postgresql_backup_rsync_connect_opts else '' }}
-  --rsync-backup-opts {{ postgresql_backup_rsync_backup_opts | quote }}
-  --keep {{ postgresql_backup_keep | quote }}
-  {{ '--pg-bin-dir ' ~ __postgresql_pgdg_bin_dir if ansible_os_family == 'RedHat' else '' }}
-  --backup --clean-archive {{ postgresql_backup_dir | quote }}"
+#postgresql_backup_rsync_backup_opts: '-rpt --chown=postgres:{{ galaxy_group }}'
+#postgresql_backup_hour: 7
+## sg is necessary because rsync copies with the default group and then performs a chown, which doesn't work for the way
+## quotas are calculated on Corral 4.
+#postgresql_backup_command: >-
+#  /usr/bin/sg {{ galaxy_group }} -c
+#  "{{ postgresql_backup_local_dir | quote }}/bin/backup.py
+#  {{ '--rsync-connect-opts ' ~ (postgresql_backup_rsync_connect_opts | quote) if postgresql_backup_rsync_connect_opts else '' }}
+#  --rsync-backup-opts {{ postgresql_backup_rsync_backup_opts | quote }}
+#  --keep {{ postgresql_backup_keep | quote }}
+#  {{ '--pg-bin-dir ' ~ __postgresql_pgdg_bin_dir if ansible_os_family == 'RedHat' else '' }}
+#  --backup --clean-archive {{ postgresql_backup_dir | quote }}"
 
 postgresql_conf:
   temp_buffers: 64MB

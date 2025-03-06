@@ -3,7 +3,7 @@
 postfix_root_address: "{{ vault_postfix_root_address }}"
 
 # This is used by a variety of galaxyproject.* roles
-pip_virtualenv_command: /usr/bin/python3 -m venv
+pip_virtualenv_command: /usr/bin/python3.12 -m venv
 
 all_packages:
   - zsh
@@ -15,6 +15,7 @@ all_packages:
   - htop
   - netcat
   - strace
+  - python3.12
 
 local_users:
   slurm:
@@ -29,7 +30,7 @@ local_users:
     name: postgres
     uid: 26
     group: postgres
-    groups: G-803372
+    groups: G-827737
     comment: PostgreSQL Server
     home: /var/lib/pgsql
     local: true

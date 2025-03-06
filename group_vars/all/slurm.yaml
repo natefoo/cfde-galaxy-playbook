@@ -1,0 +1,71 @@
+---
+
+slurm_controller_name: cfde-galaxy-dev
+slurm_controller_ip: 129.114.98.3
+slurm_cluster_name: cfde
+
+slurm_munge_key: files/slurm/munge.key
+
+slurm_cgroup_config:
+  CgroupAutomount: yes
+  ConstrainCores: yes
+  ConstrainRAMSpace: yes
+  ConstrainSwapSpace: yes
+
+slurm_config:
+  ControlMachine: "{{ slurm_controller_name }}"
+  ControlAddr: "{{ slurm_controller_ip }}"
+  ClusterName: "{{ slurm_cluster_name }}"
+
+  # Should help decrease the frequency of nodes draining with "Kill task failed"
+  # https://bugs.schedmd.com/show_bug.cgi?id=3941
+  UnkillableStepTimeout: 300
+
+  PluginDir: /usr/lib64/slurm
+
+  ReturnToService: 1
+  RebootProgram: /usr/sbin/reboot
+
+  JobCompLoc: /var/log/slurm/slurm.job.log
+  JobCompType: jobcomp/filetxt
+  SchedulerType: sched/backfill
+  SchedulerParameters: nohold_on_prolog_fail
+
+  #Prolog: /etc/slurm/prolog.sh
+  #PrologEpilogTimeout: 90
+
+  SelectType: select/cons_res
+  SelectTypeParameters: CR_CPU_Memory
+  SwitchType: switch/none
+
+  SlurmctldTimeout: 300
+  SlurmdSpoolDir: /var/spool/slurm/d
+  SlurmdTimeout: 300
+  StateSaveLocation: /var/spool/slurm/ctld
+
+  #AccountingStorageType: accounting_storage/slurmdbd
+  #AccountingStorageHost: "{{ slurm_dbd_server_name }}"
+  #AccountingStoragePort: 6819
+
+  JobAcctGatherType: jobacct_gather/cgroup
+  JobAcctGatherFrequency: task=15
+  ProctrackType: proctrack/cgroup
+  TaskPlugin: task/cgroup
+
+  SlurmctldLogFile: /var/log/slurm/slurmctld.log
+  SlurmctldDebug: 4
+  SlurmdLogFile: /var/log/slurm/slurmd.log
+  SlurmdDebug: 4
+
+slurm_nodes:
+  - name: cfde-galaxy-dev
+    RealMemory: 4096
+    CPUS: 2
+    State: UNKNOWN
+    Weight: 0
+
+slurm_partitions:
+  - name: normal
+    Default: "YES"
+    Nodes: cfde-galaxy-dev
+    State: "UP"

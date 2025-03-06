@@ -3,8 +3,15 @@
 
 all:
 
-  #vars:
+  vars:
+    ansible_become: true
+    ansible_connection: local
   #  ansible_user: root
+
+  hosts:
+    # TEMP for dual duty until we put some nodes in production
+    cfde-galaxy-dev.tacc.utexas.edu:
+      slurm_roles: [controller, exec]
 
   children:
 
@@ -23,8 +30,9 @@ all:
 
     # Deploys PostgreSQL and gxadmin
     galaxy_db_servers:
-      hosts:
-        #.tacc.utexas.edu:
+      children:
+        galaxy_dev_servers:
+        galaxy_prod_servers:
 
     # Deploys redis
     galaxy_redis_servers:
@@ -82,16 +90,24 @@ all:
     # Deploys CVMFS and configures as a client
     cvmfs_clients:
       children:
-        galaxy_vms:
+        galaxy_servers:
 
     # Deploys Slurm client and configuration
     slurm_clients:
       children:
-        galaxy_vms:
+        galaxy_servers:
 
     slurm_controllers:
+      vars:
+        slurm_roles: [controller]
       hosts:
-        #.tacc.utexas.edu:
+        cfde-galaxy-dev.tacc.utexas.edu:
+
+    slurm_exec_hosts:
+      vars:
+        slurm_roles: [exec]
+      hosts:
+        cfde-galaxy-dev.tacc.utexas.edu:
 
     slurm_dbd_servers:
       hosts:

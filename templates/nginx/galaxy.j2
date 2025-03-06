@@ -1,6 +1,8 @@
 server {
-    listen        *:443 ssl default_server;
-    server_name   "{{ galaxy_instance_hostname }}";
+    #listen        *:443 ssl default_server;
+    #server_name   "{{ galaxy_instance_hostname }}";
+    listen        *:80 default_server;
+    server_name   "{{ inventory_hostname }}";
 
     access_log  /var/log/nginx/{{ galaxy_instance_codename }}-access.log;
     error_log   /var/log/nginx/{{ galaxy_instance_codename }}-error.log;

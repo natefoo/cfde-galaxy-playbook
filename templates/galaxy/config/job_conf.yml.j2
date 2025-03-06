@@ -10,7 +10,7 @@ runners:
   slurm:
     load: galaxy.jobs.runners.slurm:SlurmJobRunner
     workers: 4
-    drmaa_library_path: /usr/lib/slurm-drmaa/lib/libdrmaa.so.1
+    drmaa_library_path: /usr/lib64/libdrmaa.so.1
     invalidjobexception_retries: 5
     internalexception_retries: 5
 

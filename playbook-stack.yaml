@@ -28,37 +28,26 @@
   tags:
     - slurm
 
-#- name: Galaxy Initial Setup
-#  hosts: galaxyservers
-#  pre_tasks:
-#    - name: Create Galaxy directories
-#      file:
-#        path: "{{ item }}"
-#        state: directory
-#        mode: 02770
-#      loop: "{{ galaxy_precreate_dirs }}"
-#      become: true
-#      become_user: "{{ galaxy_user.name }}"
-#  roles:
-#    - role: galaxyproject.miniconda
-#      become: yes
-#      become_user: "{{ galaxy_user.name }}"
-#    - role: galaxyproject.tusd
-#  tags:
-#    - galaxy
+- name: Galaxy Paths
+  hosts: galaxy_servers
+  roles:
+    - role: galaxyproject.general.paths
+    - role: galaxyproject.galaxy.paths_local_ro
+    - role: galaxyproject.galaxy.paths_local_rw
+    - role: galaxyproject.galaxy.paths_shared_ro
+      become_user: "{{ galaxy_user_name }}"
+      # in this case we don't privsep on NFS, which is only for local tool deployments anyway
+      galaxy_privsep_user_name: "{{ galaxy_user_name }}"
+    - role: galaxyproject.galaxy.paths_shared_rw
+      become_user: "{{ galaxy_user_name }}"
+    - role: galaxyproject.tusd
+  tags:
+    - galaxy
 
 - name: NGINX
   hosts: galaxy_servers
   roles:
     - role: galaxyproject.nginx
-  #post_tasks:
-#  #  - name: Set nginx runtime group
-#  #    lineinfile:
-#  #      line: 'user www-data {{ galaxy_instance_group }};'
-#  #      regexp: '^user .*;$'
-#  #      path: /etc/nginx/nginx.conf
-#  #    notify:
-#  #      - restart nginx
   tags:
     - nginx
 

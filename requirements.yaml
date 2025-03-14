@@ -1,6 +1,8 @@
 ---
 
 roles:
+  - name: galaxyproject.cvmfs
+    version: 0.3.0
   - name: galaxyproject.gxadmin
     version: 0.0.13
   - name: galaxyproject.nginx

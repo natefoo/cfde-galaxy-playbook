@@ -18,10 +18,12 @@ galaxy_separate_privileges: true
 #galaxy_manage_paths: false
 galaxy_layout: root-dir
 galaxy_root: "{{ galaxy_local_root }}"
-galaxy_tus_upload_store: "{{ galaxy_shared_root }}/upload"
+galaxy_tus_upload_store: "{{ galaxy_shared_rw_root }}/upload"
+
+galaxy_mutable_config_backup_dir: files/galaxy/var
 
 # This is used by the nginx template and have to be set since the nginx role doesn't run in the same playbook/after the galaxy role
-galaxy_server_dir: "{{ galaxy_root }}/server"
+galaxy_server_dir: "{{ galaxy_local_ro_root }}/server"
 # TODO: These should't need to be set if the role can be used to manage paths instead of doing it as a pre-task in the deps playbook
 #galaxy_config_dir: "{{ galaxy_root }}/config"
 #galaxy_mutable_config_dir: "{{ galaxy_root }}/var/config"
@@ -58,14 +60,18 @@ galaxy_tusd_port: 1080
 galaxy_force_checkout: true
 
 #galaxy_virtualenv_command: "{{ miniconda_prefix }}/envs/__python@3.9/bin/python3 -m venv"
+galaxy_venv_dir: "{{ galaxy_local_ro_root }}/venv"
+pip_extra_args: "--extra-index-url https://wheels.galaxyproject.org/"
 
-galaxy_job_metrics_plugins:
-  - type: core
-  - type: cpuinfo
-  - type: meminfo
-  - type: uname
-  - type: cgroup
-  - type: hostname
+tpv_config_dir: "{{ galaxy_config_dir }}/tpv"
+
+#galaxy_job_metrics_plugins:
+#  - type: core
+#  - type: cpuinfo
+#  - type: meminfo
+#  - type: uname
+#  - type: cgroup
+#  - type: hostname
 
 # Used by the job_conf.yml template
 galaxy_job_conf_singularity_volumes:

@@ -1,0 +1,17 @@
+---
+# Install/Manage Galaxy
+
+- name: Galaxy
+  hosts: galaxy_servers
+  roles:
+    - role: galaxyproject.galaxy.venv
+    - role: galaxyproject.galaxy.clone
+    - role: galaxyproject.galaxy.version
+    - role: galaxyproject.galaxy.gravity
+    - role: galaxyproject.galaxy.config
+    - role: galaxyproject.galaxy.dependencies
+    - role: galaxyproject.galaxy.state
+      become_user: "{{ galaxy_user_name }}"
+    - role: galaxyproject.galaxy.database
+      become_user: "{{ galaxy_user_name }}"
+    - role: galaxyproject.galaxy.client

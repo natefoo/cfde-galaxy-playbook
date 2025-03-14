@@ -18,6 +18,13 @@
   tags:
     - slurm
 
+- name: CVMFS
+  hosts: all
+  roles:
+    - role: galaxyproject.cvmfs
+  tags:
+    - cvmfs
+
 - name: DRMAA for Slurm
   hosts: galaxy_servers
   tasks:
@@ -47,6 +54,7 @@
 - name: NGINX
   hosts: galaxy_servers
   roles:
+    - role: galaxyproject.galaxy.defaults
     - role: galaxyproject.nginx
   tags:
     - nginx

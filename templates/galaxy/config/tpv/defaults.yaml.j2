@@ -1,0 +1,75 @@
+---
+
+global:
+
+  default_inherits: _default_tool
+
+destinations:
+
+  _slurm:
+    abstract: true
+    runner: slurm
+    params:
+      tmp_dir: true
+      outputs_to_working_directory: true
+      metadata_strategy: extended
+    scheduling:
+      accept:
+      - cvmfs
+
+  _slurm_singularity:
+    abstract: true
+    inherits: _slurm
+    params:
+      singularity_enabled: true
+{#
+      singularity_volumes: "{{ galaxy_job_conf_singularity_volumes.local | join(',') }}"
+#}
+      singularity_no_mount: null
+{#
+      singularity_default_container_id: "{{ galaxy_job_conf_default_container_id }}"
+#}
+    scheduling:
+      accept:
+      - singularity
+      # for TPV shared DB
+      - docker
+
+  slurm_conda_direct:
+    inherits: _slurm
+    min_accepted_cores: 1
+    min_accepted_mem: 0
+    max_accepted_cores: 4
+    max_accepted_mem: 32
+    params:
+      native_specification: "--nodes=1 --ntasks={int(cores)} --mem={round(mem*1024)} --time={time} --partition=normal"
+    scheduling:
+      require:
+      - conda
+
+tools:
+
+  _default_tool:
+    abstract: true
+    cores: 1
+    mem: cores * 3.7
+    env: {}
+    context:
+      time: "48:00:00"
+    scheduling:
+      accept:
+        - general
+      reject:
+        - offline
+    rules: []
+
+  _conda_direct:
+    abstract: true
+    scheduling:
+      require:
+      - conda
+
+  upload1: {inherits: _conda_direct}
+  __DATA_FETCH__: {inherits: _conda_direct}
+  __SET_METADATA__: {inherits: _conda_direct}
+  export_remote: {inherits: _conda_direct}

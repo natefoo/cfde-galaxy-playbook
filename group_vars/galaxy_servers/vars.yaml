@@ -64,6 +64,8 @@ galaxy_venv_dir: "{{ galaxy_local_ro_root }}/venv"
 pip_extra_args: "--extra-index-url https://wheels.galaxyproject.org/"
 
 tpv_config_dir: "{{ galaxy_config_dir }}/tpv"
+galaxy_extra_local_ro_dirs:
+  - "{{ tpv_config_dir }}"
 
 #galaxy_job_metrics_plugins:
 #  - type: core
@@ -89,6 +91,9 @@ galaxy_job_conf_singularity_volumes:
 galaxy_config_templates:
   - src: templates/galaxy/config/job_conf.yml.j2
     dest: "{{ galaxy_config.galaxy.job_config_file }}"
+  # TODO: add lint role to collection and use that
+  - src: templates/galaxy/config/tpv/defaults.yaml.j2
+    dest: "{{ tpv_config_dir }}/defaults.yaml"
 
 # NGINX
 nginx_conf_user: nginx

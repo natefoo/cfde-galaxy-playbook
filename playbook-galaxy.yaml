@@ -15,3 +15,18 @@
     - role: galaxyproject.galaxy.database
       become_user: "{{ galaxy_user_name }}"
     - role: galaxyproject.galaxy.client
+  post_tasks:
+    - name: Create job_execution venv for galaxy-set-metadata
+      ansible.builtin.pip:
+        name:
+          - pip
+          - wheel
+        state: latest
+        virtualenv: "{{ job_execution_venv }}"
+        virtualenv_command: "{{ pip_virtualenv_command }}"
+      become_user: "{{ galaxy_user }}"
+    - name: Install galaxy-job-execution and extras
+      ansible.builtin.pip:
+        name: "{{ job_execution_packages }}"
+        virtualenv: "{{ job_execution_venv }}"
+      become_user: "{{ galaxy_user }}"

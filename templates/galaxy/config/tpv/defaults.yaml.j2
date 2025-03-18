@@ -53,9 +53,13 @@ tools:
     abstract: true
     cores: 1
     mem: cores * 3.7
-    env: {}
     context:
       time: "48:00:00"
+    params:
+      use_metadata_binary: true
+    env:
+      - name: GALAXY_VIRTUAL_ENV
+        value: "{{ job_execution_venv }}"
     scheduling:
       accept:
         - general

@@ -91,6 +91,10 @@ galaxy_job_conf_singularity_volumes:
 galaxy_config_templates:
   - src: templates/galaxy/config/job_conf.yml.j2
     dest: "{{ galaxy_config.galaxy.job_config_file }}"
+  - src: templates/galaxy/config/oidc_config.xml.j2
+    dest: "{{ galaxy_config.galaxy.oidc_config_file }}"
+  - src: templates/galaxy/config/oidc_backends_config.xml.j2
+    dest: "{{ galaxy_config.galaxy.oidc_backends_config_file }}"
   # TODO: add lint role to collection and use that
   - src: templates/galaxy/config/tpv/defaults.yaml.j2
     dest: "{{ tpv_config_dir }}/defaults.yaml"

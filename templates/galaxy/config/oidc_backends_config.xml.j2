@@ -2,8 +2,8 @@
 <OIDC>
     <provider name="tapis">
         <tenant_id>cfde</tenant_id>
-        <client_id>cfde-galaxy-dev</client_id>
+        <client_id>{{ tapis_oidc_client_id }}</client_id>
         <client_secret>{{ tapis_oidc_client_secret }}</client_secret>
-        <redirect_uri>http://cfde-galaxy-dev.tacc.utexas.edu/authnz/tapis/callback</redirect_uri>
+        <redirect_uri>https://{{ galaxy_instance_hostname }}/authnz/tapis/callback</redirect_uri>
     </provider>
 </OIDC>

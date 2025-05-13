@@ -1,5 +1,6 @@
 ---
 
+tapis_oidc_client_id: "{{ vault_tapis_oidc_client_secret }}"
 tapis_oidc_client_secret: "{{ vault_tapis_oidc_client_secret }}"
 
 galaxy_user: cfdecloud

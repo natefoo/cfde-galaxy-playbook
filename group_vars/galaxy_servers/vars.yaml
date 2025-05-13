@@ -104,15 +104,13 @@ nginx_conf_user: nginx
 nginx_conf_group: "{{ galaxy_group }}"
 nginx_selinux_allow_local_connections: true
 nginx_servers:
-  #- default
+  - default
+nginx_ssl_servers:
   - galaxy
-#nginx_ssl_servers:
-#  - galaxy
 nginx_enable_default_server: false
 #nginx_default_redirect_uri: "https://{{ galaxy_instance_hostname }}$request_uri"
 nginx_conf_http:
   client_max_body_size: 10g
   proxy_read_timeout: 300
-#nginx_ssl_role: usegalaxy_eu.certbot
-#nginx_conf_ssl_certificate: /etc/ssl/certs/fullchain.pem
-#nginx_conf_ssl_certificate_key: /etc/ssl/user/privkey-nginx.pem
+nginx_conf_ssl_certificate: /etc/letsencrypt/live/cfdeworkspace.org/fullchain.pem
+nginx_conf_ssl_certificate_key: /etc/letsencrypt/live/cfdeworkspace.org/privkey.pem

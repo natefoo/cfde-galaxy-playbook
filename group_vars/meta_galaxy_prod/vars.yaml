@@ -3,15 +3,15 @@
 tapis_oidc_client_secret: "{{ vault_tapis_oidc_client_secret }}"
 
 galaxy_user: cfdecloud
-galaxy_instance_codename: dev
-galaxy_instance_hostname: dev.cfdeworkspace.org
+galaxy_instance_codename: prod
+galaxy_instance_hostname: cfdeworkspace.org
 galaxy_db_host: /var/run/postgresql
-galaxy_local_root: /srv/galaxy/dev
-galaxy_shared_root: "{{ tacc_corral_root }}/galaxy/dev"
+galaxy_local_root: /srv/galaxy/prod
+galaxy_shared_root: "{{ tacc_corral_root }}/galaxy/prod"
 
-galaxy_repo: https://github.com/natefoo/galaxy.git
-galaxy_commit_id: tapis-auth_24.2
-#galaxy_commit_id: release_24.2
+  #galaxy_repo: https://github.com/natefoo/galaxy.git
+#galaxy_commit_id: tapis-auth_24.2
+galaxy_commit_id: release_24.2
 galaxy_job_execution_version: "24.2.3"
 
 galaxy_config:
@@ -41,7 +41,7 @@ galaxy_config:
           - job-handlers
           - workflow-schedulers
   galaxy:
-    brand: "CFDE Cloud DEV"
+    brand: "CFDE Cloud"
     #admin_users: "{{ vault_galaxy_config_admin_users }}"
     database_connection: "postgresql:///galaxy_{{ galaxy_instance_codename }}"
     install_database_connection: "sqlite:////cvmfs/cloud.galaxyproject.org/var/install.sqlite?isolation_level=IMMEDIATE"

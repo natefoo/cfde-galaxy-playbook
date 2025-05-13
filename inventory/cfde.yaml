@@ -39,21 +39,6 @@ all:
       children:
         galaxy_servers:
 
-    # Not fully usable on its own but provides vars common to both ACME challenge methods
-    letsencrypt_clients:
-      children:
-        letsencrypt_dns01_clients:
-
-    # Provides Certbot config for DNS-01 challenges
-    letsencrypt_dns01_clients:
-      #children:
-      #  galaxy_servers:
-
-    # Provides the Certbot TSIG key for DNS-01 challenges
-    certbot_tsig_key_consumers:
-      children:
-        letsencrypt_dns01_clients:
-
     # Sets some default variables for nginx package/config
     web_servers:
       children:

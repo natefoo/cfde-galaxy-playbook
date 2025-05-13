@@ -4,10 +4,6 @@ server {
 
     server_name "{{ galaxy_instance_hostname }}";
 
-    location /.well-known/ {
-        root {{ certbot_well_known_root }};
-    }
-
     location / {
         return 302 https://$host$request_uri;
     }

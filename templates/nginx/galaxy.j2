@@ -1,3 +1,15 @@
+{% if galaxy_instance_redirect_hostnames is defined %}
+server {
+    listen *:443 ssl;
+
+    server_name {{ galaxy_instance_redirect_hostnames | join(' ') }};
+
+    location / {
+        return 302 https://{{ galaxy_instance_hostname }}$request_uri;
+    }
+}
+
+{% endif %}
 server {
     listen        *:443 ssl default_server;
     server_name   "{{ galaxy_instance_hostname }}";

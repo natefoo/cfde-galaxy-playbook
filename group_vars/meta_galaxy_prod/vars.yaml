@@ -6,6 +6,10 @@ tapis_oidc_client_secret: "{{ vault_tapis_oidc_client_secret }}"
 galaxy_user: cfdecloud
 galaxy_instance_codename: prod
 galaxy_instance_hostname: cfdeworkspace.org
+galaxy_instance_redirect_hostnames:
+  - www.cfdeworkspace.org
+  - cfdecloud.org
+  - www.cfdecloud.org
 galaxy_db_host: /var/run/postgresql
 galaxy_local_root: /srv/galaxy/prod
 galaxy_shared_root: "{{ tacc_corral_root }}/galaxy/prod"

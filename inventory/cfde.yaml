@@ -9,9 +9,11 @@ all:
   #  ansible_user: root
 
   hosts:
-    # TEMP for dual duty until we put some nodes in production
+    # for upload jobs for now
     cfde-galaxy-dev.tacc.utexas.edu:
       slurm_roles: [controller, exec]
+    cfde-galaxy.tacc.utexas.edu:
+      slurm_roles: [exec]
 
   children:
 

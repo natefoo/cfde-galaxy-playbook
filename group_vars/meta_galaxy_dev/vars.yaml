@@ -28,13 +28,19 @@ galaxy_config:
       workers: 2
       timeout: 600
       preload: true
+      environment:
+        HDF5_USE_FILE_LOCKING: "FALSE"
     celery:
       enable: true
       enable_beat: true
+      environment:
+        HDF5_USE_FILE_LOCKING: "FALSE"
     tusd:
       enable: true
       tusd_path: /usr/local/sbin/tusd
       upload_dir: "{{ galaxy_tus_upload_store }}"
+      environment:
+        HDF5_USE_FILE_LOCKING: "FALSE"
     handlers:
       handler:
         name_template: "handler{process}"
@@ -42,6 +48,8 @@ galaxy_config:
         pools:
           - job-handlers
           - workflow-schedulers
+        environment:
+          HDF5_USE_FILE_LOCKING: "FALSE"
   galaxy:
     brand: "CFDE Cloud DEV"
     #admin_users: "{{ vault_galaxy_config_admin_users }}"
@@ -49,6 +57,7 @@ galaxy_config:
     install_database_connection: "sqlite:////cvmfs/cloud.galaxyproject.org/var/install.sqlite?isolation_level=IMMEDIATE"
     builds_file_path: "{{ galaxy_server_dir }}/tool-data/shared/ucsc/builds.txt"
     file_path: "{{ galaxy_shared_rw_root }}/objects"
+    tool_path: "{{ galaxy_shared_ro_root }}/tools"
     tool_data_path: "{{ galaxy_shared_rw_root }}/tool-data"
     shed_tool_config_file: /cvmfs/cloud.galaxyproject.org/config/shed_tool_conf.xml
     object_store_store_by: uuid

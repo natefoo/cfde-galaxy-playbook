@@ -16,6 +16,14 @@
       become_user: "{{ galaxy_user_name }}"
     - role: galaxyproject.galaxy.client
   post_tasks:
+    - name: Deploy internal tools
+      ansible.posix.synchronize:
+        src: "{{ galaxy_server_dir }}/tools/"
+        dest: "{{ galaxy_config.galaxy.tool_path }}"
+        archive: true
+        delete: true
+      become_user: "{{ galaxy_user }}"
+      delegate_to: "{{ inventory_hostname }}"
     - name: Create job_execution venv for galaxy-set-metadata
       ansible.builtin.pip:
         name:

@@ -77,16 +77,13 @@ galaxy_extra_local_ro_dirs:
 
 # Used by the job_conf.yml template
 galaxy_job_conf_singularity_volumes:
-  - "$galaxy_root:ro"
-  - "$tool_directory:ro"
-  - "$default_file_path:ro"
-  #- "{{ galaxy_mutable_data_dir }}/tool-data:ro"
-  - "$working_directory:rw"
-  - "$job_directory:rw"
-  #- "{{ galaxy_new_file_path }}:ro"
-  #- "{{ miniconda_prefix }}:ro"
-  #- "{{ galaxy_venv_dir }}:ro"
-  - "/cvmfs/data.galaxyproject.org:ro"
+  local:
+    - "$tool_directory:ro"
+    - "$working_directory:rw"
+    - "$job_directory:rw"
+    - "$default_file_path:ro"
+    #- "{{ job_execution_venv }}:ro"
+    - "/cvmfs/data.galaxyproject.org:ro"
 
 galaxy_config_templates:
   - src: templates/galaxy/config/job_conf.yml.j2

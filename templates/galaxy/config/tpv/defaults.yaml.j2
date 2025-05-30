@@ -17,24 +17,6 @@ destinations:
       accept:
       - cvmfs
 
-  _slurm_singularity:
-    abstract: true
-    inherits: _slurm
-    params:
-      singularity_enabled: true
-{#
-      singularity_volumes: "{{ galaxy_job_conf_singularity_volumes.local | join(',') }}"
-#}
-      singularity_no_mount: null
-{#
-      singularity_default_container_id: "{{ galaxy_job_conf_default_container_id }}"
-#}
-    scheduling:
-      accept:
-      - singularity
-      # for TPV shared DB
-      - docker
-
   slurm_conda_direct:
     inherits: _slurm
     min_accepted_cores: 1
@@ -47,6 +29,38 @@ destinations:
       require:
       - conda
 
+  slurm_conda_direct_galaxy:
+    inherits: _slurm
+    min_accepted_cores: 1
+    min_accepted_mem: 0
+    max_accepted_cores: 4
+    max_accepted_mem: 32
+    params:
+      native_specification: "--nodes=1 --ntasks={int(cores)} --mem={round(mem*1024)} --time={time} --partition=galaxy -w {{ inventory_hostname_short }}"
+    scheduling:
+      require:
+      - conda
+      - galaxy
+
+  slurm_apptainer:
+    inherits: _slurm
+    min_accepted_cores: 1
+    min_accepted_mem: 0
+    max_accepted_cores: 4
+    max_accepted_mem: 32
+    params:
+      native_specification: "--nodes=1 --ntasks={int(cores)} --mem={round(mem*1024)} --time={time} --partition=normal"
+      singularity_enabled: true
+      singularity_no_mount: null
+      singularity_volumes: "{{ galaxy_job_conf_singularity_volumes.local | join(',') }}"
+      require_container: true
+    scheduling:
+      accept:
+      - general
+      - singularity
+      # for TPV shared DB
+      - docker
+
 tools:
 
   _default_tool:
@@ -58,13 +72,15 @@ tools:
     params:
       use_metadata_binary: true
     env:
-      - name: GALAXY_VIRTUAL_ENV
-        value: "{{ job_execution_venv }}"
+    - name: GALAXY_VIRTUAL_ENV
+      value: "{{ job_execution_venv }}"
+    - name: HDF5_USE_FILE_LOCKING
+      value: "FALSE"
     scheduling:
       accept:
-        - general
+      - general
       reject:
-        - offline
+      - offline
     rules: []
 
   _conda_direct:
@@ -73,7 +89,14 @@ tools:
       require:
       - conda
 
-  upload1: {inherits: _conda_direct}
-  __DATA_FETCH__: {inherits: _conda_direct}
+  _conda_direct_galaxy:
+    abstract: true
+    scheduling:
+      require:
+      - conda
+      - galaxy
+
+  upload1: {inherits: _conda_direct_galaxy}
+  __DATA_FETCH__: {inherits: _conda_direct_galaxy}
   __SET_METADATA__: {inherits: _conda_direct}
   export_remote: {inherits: _conda_direct}

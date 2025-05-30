@@ -72,6 +72,11 @@ all:
       hosts:
         cfde-galaxy.tacc.utexas.edu:
 
+    galaxy_workers:
+      hosts:
+        cfde-worker01.tacc.utexas.edu:
+          ansible_host: 129.114.35.73
+
     # Deploys CVMFS and configures as a client
     cvmfs_clients:
       children:
@@ -91,8 +96,8 @@ all:
     slurm_exec_hosts:
       vars:
         slurm_roles: [exec]
-      hosts:
-        cfde-galaxy-dev.tacc.utexas.edu:
+      children:
+        galaxy_workers:
 
     slurm_dbd_servers:
       hosts:

@@ -1,0 +1,10 @@
+---
+# Galaxy worker nodes
+
+- name: Slurm
+  hosts: galaxy_workers
+  roles:
+    - role: galaxyproject.cvmfs
+      tags: cvmfs
+    - role: galaxyproject.slurm
+      tags: slurm

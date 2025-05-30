@@ -58,14 +58,20 @@ slurm_config:
   SlurmdDebug: 4
 
 slurm_nodes:
-  - name: cfde-galaxy-dev
-    RealMemory: 4096
-    CPUS: 2
+  #- name: cfde-galaxy-dev
+  #  RealMemory: 4096
+  #  CPUS: 2
+  #  State: UNKNOWN
+  #  Weight: 0
+  - name: cfde-worker01
+    NodeAddr: 129.114.35.73
+    CPUS: 32
+    RealMemory: 63000  # slurmd -C reports RealMemory=63774
     State: UNKNOWN
     Weight: 0
 
 slurm_partitions:
   - name: normal
     Default: "YES"
-    Nodes: cfde-galaxy-dev
+    Nodes: cfde-worker01
     State: "UP"

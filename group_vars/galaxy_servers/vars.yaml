@@ -99,6 +99,10 @@ galaxy_config_templates:
   - src: templates/galaxy/config/tpv/defaults.yaml.j2
     dest: "{{ tpv_config_dir }}/defaults.yaml"
 
+galaxy_config_files:
+  - src: files/galaxy/config/auth_conf.xml
+    dest: "{{ galaxy_config.galaxy.auth_config_file }}"
+
 # NGINX
 nginx_conf_user: nginx
 nginx_conf_group: "{{ galaxy_group }}"

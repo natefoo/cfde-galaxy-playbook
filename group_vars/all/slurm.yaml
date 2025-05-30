@@ -1,7 +1,7 @@
 ---
 
 slurm_controller_name: cfde-galaxy-dev
-slurm_controller_ip: 129.114.98.3
+slurm_controller_ip: "{{ lookup('community.general.dig', slurm_controller_name ~ '.tacc.utexas.edu.') }}"
 slurm_cluster_name: cfde
 
 slurm_munge_key: files/slurm/munge.key

@@ -2,7 +2,7 @@
 
 tapis_oidc_client_id: cfde-galaxy-dev
 tapis_oidc_client_secret: "{{ vault_tapis_oidc_client_secret }}"
-tapis_oidc_redirect_uri: "http://{{ galaxy_instance_hostname }}/authnz/tapis/callback"
+#tapis_oidc_redirect_uri: "http://{{ galaxy_instance_hostname }}/authnz/tapis/callback"
 
 galaxy_user: cfdecloud
 galaxy_instance_codename: dev

@@ -4,6 +4,6 @@
         <tenant_id>cfde</tenant_id>
         <client_id>{{ tapis_oidc_client_id }}</client_id>
         <client_secret>{{ tapis_oidc_client_secret }}</client_secret>
-        <redirect_uri>https://{{ galaxy_instance_hostname }}/authnz/tapis/callback</redirect_uri>
+        <redirect_uri>{{ tapis_oidc_redirect_uri | default('https://' ~ galaxy_instance_hostname ~ '/authnz/tapis/callback') }}</redirect_uri>
     </provider>
 </OIDC>

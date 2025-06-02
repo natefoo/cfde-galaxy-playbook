@@ -38,3 +38,9 @@
         name: "{{ job_execution_packages }}"
         virtualenv: "{{ job_execution_venv }}"
       become_user: "{{ galaxy_user }}"
+    - name: Copy welcome.html
+      ansible.builtin.copy:
+        src: files/galaxy/static/welcome.html
+        dest: "{{ galaxy_static_dir }}/welcome.html"
+        mode: "0644"
+      tags: welcome

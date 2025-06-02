@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Welcome to the CFDE Workspace</title>
+        <style>
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                line-height: 1.6;
+                color: #454545;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: white;
+            }
+
+            .container {
+                background: white;
+                padding: 40px;
+            }
+
+            .header {
+                text-align: center;
+                margin-bottom: 30px;
+                border-bottom: 2px solid #e9ecef;
+                padding-bottom: 20px;
+            }
+
+            .logo {
+                font-size: 2.5em;
+                font-weight: bold;
+                color: #bf5700;
+                margin-bottom: 10px;
+            }
+
+            .subtitle {
+                font-size: 1.2em;
+                color: #454545;
+                margin-bottom: 5px;
+            }
+
+            .tagline {
+                font-style: italic;
+                color: #666;
+            }
+
+            .welcome-content {
+                margin: 30px 0;
+            }
+
+            .getting-started {
+                background: #f8f9fa;
+                padding: 20px;
+                border-radius: 6px;
+                border-left: 4px solid #bf5700;
+                margin: 20px 0;
+            }
+
+            .features {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                margin: 30px 0;
+            }
+
+            .feature {
+                padding: 20px;
+                background: #f8f9fa;
+                border-radius: 6px;
+                border: 1px solid #e9ecef;
+            }
+
+            .feature h3 {
+                color: #bf5700;
+                margin-top: 0;
+            }
+
+            .support {
+                background: #e7f3ff;
+                padding: 20px;
+                border-radius: 6px;
+                text-align: center;
+                margin: 30px 0;
+                border: 1px solid #00a4d9;
+            }
+
+            .funding {
+                margin-top: 40px;
+                padding-top: 20px;
+                border-top: 1px solid #e9ecef;
+                font-size: 0.9em;
+                color: #454545;
+            }
+
+            .funding h3 {
+                color: #454545;
+                font-size: 1em;
+                margin-bottom: 15px;
+            }
+
+            a {
+                color: #00a4d9;
+                text-decoration: none;
+            }
+
+            a:hover {
+                text-decoration: underline;
+                color: #bf5700;
+            }
+
+            .disclaimer {
+                background: #fff3cd;
+                border: 1px solid #ffeaa7;
+                border-radius: 6px;
+                padding: 15px;
+                margin: 20px 0;
+                font-size: 0.9em;
+            }
+
+            .partners {
+                margin: 40px 0;
+                padding: 30px 0;
+                border-top: 1px solid #e9ecef;
+                border-bottom: 1px solid #e9ecef;
+                text-align: center;
+            }
+
+            .partners h3 {
+                color: #454545;
+                font-size: 1.1em;
+                margin-bottom: 25px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                font-weight: 600;
+            }
+
+            .partner-logos {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                flex-wrap: wrap;
+            }
+
+            .partner-logo {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                min-width: 80px;
+            }
+
+            .partner-logo img {
+                height: 35px;
+                width: auto;
+                opacity: 0.8;
+                transition: opacity 0.3s ease;
+                margin-bottom: 5px;
+            }
+
+            .partner-logo img:hover {
+                opacity: 1;
+            }
+
+            .partner-text {
+                font-size: 1.2em;
+                font-weight: bold;
+                color: #bf5700;
+                margin-bottom: 3px;
+            }
+
+            .partner-subtext {
+                font-size: 0.75em;
+                color: #666;
+                max-width: 100px;
+                line-height: 1.2;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="logo">CFDE Workspace</div>
+                <div class="subtitle">Cloud Workspace Implementation Center</div>
+                <div class="tagline">Empowering biomedical research through accessible cloud computing</div>
+            </div>
+
+            <div class="welcome-content">
+                <p>
+                    Welcome to your CFDE Cloud Workspace Galaxy instance! This platform provides researchers with
+                    powerful tools for data analysis, integration, and collaboration while leveraging free computational
+                    resources to accelerate scientific discoveries.
+                </p>
+
+                <div class="getting-started">
+                    <h3>🚀 Getting Started</h3>
+                    <p>
+                        Ready to begin your analysis? Start by uploading data using the upload tool, then select
+                        analysis tools from the tool panel on the left. You can run complex workflows, integrate with
+                        Common Fund datasets, and share your work with collaborators worldwide.
+                    </p>
+                    <p>
+                        New to Galaxy?
+                        <a
+                            href="https://training.galaxyproject.org/training-material/topics/introduction/tutorials/galaxy-intro-101/tutorial.html"
+                            >Start with Galaxy 101</a
+                        >
+                        or explore our <a href="https://galaxyproject.org/learn/">help resources</a>.
+                    </p>
+                </div>
+
+                <div class="features">
+                    <div class="feature">
+                        <h3>🔬 Advanced Analysis Tools</h3>
+                        <p>
+                            Access a comprehensive suite of bioinformatics tools and workflows developed by CFDE,
+                            Galaxy, and community partners.
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <h3>☁️ Cloud Computing Power</h3>
+                        <p>
+                            Leverage TACC's high-performance computing resources for scalable data analysis and
+                            computation.
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <h3>🤝 Data Integration</h3>
+                        <p>
+                            Import and integrate your data with Common Fund datasets for enhanced research capabilities.
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <h3>📚 Training & Support</h3>
+                        <p>
+                            Benefit from comprehensive training resources and cost-management tools designed for both
+                            novice and expert users.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="funding">
+                <h3>Funding & Infrastructure</h3>
+                <p>The CFDE Cloud Workspace Implementation Center (CWIC) is supported through partnerships with:</p>
+                <ul style="margin: 10px 0; padding-left: 20px">
+                    <li>
+                        <strong>Texas Advanced Computing Center (TACC)</strong> - High-performance computing
+                        infrastructure
+                    </li>
+                    <li><strong>Galaxy Project</strong> - Open-source data analysis platform</li>
+                    <li><strong>NIH Common Fund</strong> - Funding and program coordination</li>
+                </ul>
+
+                <p>
+                    This work is supported by the <strong>National Institutes of Health (NIH)</strong> Common Fund Data
+                    Ecosystem (CFDE) program. The Galaxy platform development is supported by NIH NHGRI awards.
+                </p>
+
+                <p>Infrastructure provided by TACC's high-performance computing resources.</p>
+
+                <div
+                    class="funding-logos"
+                    style="
+                        margin: 30px 0;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 40px;
+                        flex-wrap: wrap;
+                        opacity: 0.8;
+                    ">
+                    <img
+                        src="https://galaxyproject.org/images/usegalaxy-welcome/tacc_logo.png"
+                        alt="TACC Logo"
+                        style="height: 40px"
+                        onerror="this.src='https://www.tacc.utexas.edu/-/media/project/tacc/tacc/images/logos/tacc-logo.ashx'" />
+                    <img
+                        src="https://commonfund.nih.gov/themes/custom/ncf/logo.png"
+                        alt="NIH Common Fund Logo"
+                        style="height: 45px"
+                        onerror="this.src='https://www.nih.gov/sites/default/files/about-nih/2012-logo.png'" />
+                </div>
+
+                <p style="margin-top: 20px; font-size: 0.8em; color: #888">
+                    See the
+                    <a href="https://usegalaxy.org/static/terms.html">Terms of Service and Privacy Policy</a> for more
+                    information.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

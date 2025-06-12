@@ -2,6 +2,7 @@
 
 tapis_oidc_client_id: cfde-galaxy-prod
 tapis_oidc_client_secret: "{{ vault_tapis_oidc_client_secret }}"
+galaxy_config_admin_users: "{{ vault_galaxy_config_admin_users }}"
 
 galaxy_user: cfdecloud
 galaxy_instance_codename: prod
@@ -55,7 +56,7 @@ galaxy_config:
           HDF5_USE_FILE_LOCKING: "FALSE"
   galaxy:
     brand: "CFDE Cloud"
-    #admin_users: "{{ vault_galaxy_config_admin_users }}"
+    admin_users: "{{ galaxy_config_admin_users }}"
     database_connection: "postgresql:///galaxy_{{ galaxy_instance_codename }}"
     install_database_connection: "sqlite:////cvmfs/cloud.galaxyproject.org/var/install.sqlite?isolation_level=IMMEDIATE"
     builds_file_path: "{{ galaxy_server_dir }}/tool-data/shared/ucsc/builds.txt"

@@ -9,6 +9,7 @@
     - role: galaxyproject.galaxy.version
     - role: galaxyproject.galaxy.gravity
     - role: galaxyproject.galaxy.config
+      tags: config
     - role: galaxyproject.galaxy.dependencies
     - role: galaxyproject.galaxy.state
       become_user: "{{ galaxy_user_name }}"

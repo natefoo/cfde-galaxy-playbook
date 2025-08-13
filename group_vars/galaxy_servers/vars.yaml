@@ -85,6 +85,8 @@ galaxy_job_conf_singularity_volumes:
     #- "{{ job_execution_venv }}:ro"
     - "/cvmfs/data.galaxyproject.org:ro"
 
+galaxy_job_conf_singularity_default_container_id: /cvmfs/main.galaxyproject.org/singularity/rockylinux:9.5.20241118--0
+
 galaxy_config_templates:
   - src: templates/galaxy/config/job_conf.yml.j2
     dest: "{{ galaxy_config.galaxy.job_config_file }}"

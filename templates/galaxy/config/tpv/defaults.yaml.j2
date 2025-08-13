@@ -53,6 +53,7 @@ destinations:
       singularity_enabled: true
       singularity_no_mount: null
       singularity_volumes: "{{ galaxy_job_conf_singularity_volumes.local | join(',') }}"
+      singularity_default_container_id: "{{ galaxy_job_conf_singularity_default_container_id }}"
       require_container: true
     scheduling:
       accept:
@@ -100,3 +101,4 @@ tools:
   __DATA_FETCH__: {inherits: _conda_direct_galaxy}
   __SET_METADATA__: {inherits: _conda_direct}
   export_remote: {inherits: _conda_direct}
+  CONVERTER_.*: {inherits: _conda_direct}

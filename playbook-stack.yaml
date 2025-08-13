@@ -59,6 +59,43 @@
   tags:
     - nginx
 
+- name: RabbitMQ
+  hosts: rabbitmq_servers
+  pre_tasks:
+    - name: Ensure /etc/letsencrypt directories are readable
+      ansible.builtin.file:
+        path: "/etc/letsencrypt/{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+      loop:
+        - live
+        - archive
+    - name: Copy private key
+      ansible.builtin.copy:
+        src: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/privkey.pem"
+        dest: "/etc/rabbitmq/privkey.pem"
+        remote_src: true
+        owner: rabbitmq
+        group: rabbitmq
+        mode: "0600"
+      # Ok to fail the first time (user does not exist yet), just run the play twice
+      ignore_errors: true
+  roles:
+    - role: galaxyproject.rabbitmq
+  post_tasks:
+    - name: Ensure RabbitMQ private key copy is kept up to date
+      ansible.builtin.cron:
+        cron_file: ansible_rabbitmq
+        name: Update RabbitMQ SSL private key
+        user: root
+        hour: 0
+        minute: 0
+        job: if [ /etc/letsencrypt/live/{{ galaxy_instance_hostname }}/privkey.pem -nt /etc/rabbitmq/privkey.pem ]; then /bin/cp -p /etc/letsencrypt/live/{{ galaxy_instance_hostname }}/privkey.pem /etc/rabbitmq/privkey.pem && chown rabbitmq:rabbitmq /etc/rabbitmq/privkey.pem && systemctl restart rabbitmq-server; fi
+  tags:
+    - rabbitmq
+
 #- name: Galaxy post-install root
 #  hosts: galaxyservers
 #  roles:

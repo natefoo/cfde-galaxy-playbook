@@ -1,0 +1,28 @@
+---
+
+rabbitmq_users: "{{ vault_rabbitmq_users }}"
+
+rabbitmq_vhosts:
+  - name: /prod_pulsar
+
+rabbitmq_config:
+  vm_memory_high_watermark:
+    relative: 0.6
+  disk_free_limit:
+    absolute: 2GB
+  consumer_timeout: 3600000 # one hour in milliseconds
+  max_message_size: 134217728 # 128 MB in bytes
+  listeners:
+    tcp: none
+    ssl:
+      default: 5671
+  ssl_options:
+    cacertfile: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/fullchain.pem"
+    certfile: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/cert.pem"
+    #keyfile: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/privkey.pem"
+    keyfile: "/etc/rabbitmq/privkey.pem"
+    verify: verify_peer
+    fail_if_no_peer_cert: false
+    versions:
+      - tlsv1.3
+      - tlsv1.2

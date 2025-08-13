@@ -48,8 +48,8 @@ all:
 
     # Deploys and configures RabbitMQ
     rabbitmq_servers:
-      hosts:
-        #.tacc.utexas.edu:
+      children:
+        galaxy_prod_servers:
 
     # Creates:
     # - local gxsrc user

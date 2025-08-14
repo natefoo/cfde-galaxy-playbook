@@ -16,6 +16,7 @@ all_packages:
   - netcat
   - strace
   - python3.12
+  - apptainer
 
 local_users:
   slurm:
@@ -100,7 +101,16 @@ galaxy_cvmfs_repos_enabled: true
 job_execution_venv: "{{ galaxy_shared_root }}/ro/job_execution"
 job_execution_packages:
   - "galaxy-job-execution=={{ galaxy_job_execution_version }}"
+  # these are necessary because deps are not pinned
+  - "galaxy-data=={{ galaxy_job_execution_version }}"
+  - "galaxy-files=={{ galaxy_job_execution_version }}"
+  - "galaxy-objectstore=={{ galaxy_job_execution_version }}"
+  - "galaxy-schema=={{ galaxy_job_execution_version }}"
+  - "galaxy-tool-util=={{ galaxy_job_execution_version }}"
+  - "galaxy-util=={{ galaxy_job_execution_version }}"
+  # first version is 25.0
+  #- "galaxy-tool-util-models=={{ galaxy_job_execution_version }}"
   - edam-ontology
-  - git+https://github.com/nsoranzo/isa-rwval.git@master#egg=isa-rwval
+  #- git+https://github.com/nsoranzo/isa-rwval.git@master#egg=isa-rwval
   # https://github.com/galaxyproject/galaxy/pull/20209 fixed in 24.2.4
-  - "galaxy-config=={{ galaxy_job_execution_version }}"
+  #- "galaxy-config=={{ galaxy_job_execution_version }}"

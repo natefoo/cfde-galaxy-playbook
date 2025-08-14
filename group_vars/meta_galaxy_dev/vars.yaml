@@ -14,7 +14,7 @@ galaxy_shared_root: "{{ corral_root }}/galaxy/dev"
 galaxy_repo: https://github.com/natefoo/galaxy.git
 galaxy_commit_id: tapis-auth_24.2
 #galaxy_commit_id: release_24.2
-galaxy_job_execution_version: "24.2.3"
+galaxy_job_execution_version: "24.2.4"
 
 galaxy_config:
   gravity:

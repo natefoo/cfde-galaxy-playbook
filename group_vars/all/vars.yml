@@ -65,7 +65,8 @@ all_mounts:
     path: "{{ corral_root }}"
     fstype: nfs
     opts: "rw,nosuid,noatime,rsize=1048576,wsize=1048576,intr,nfsvers=3,tcp,soft,nolock,addr={{ tacc_corral_gateway_address | default(tacc_corral_gateway_address_default) }}"
-    owner: jfonner
+    #owner: jfonner
+    owner: 803925
     group: G-827737
 
 postfix_role: "null-client"
@@ -91,7 +92,7 @@ postfix_aliases:
 galaxy_create_user: false
 galaxy_create_group: false
 galaxy_group: G-827737
-corral_root: "{{ tacc_corral_root }}"
+corral_root: /corral/projects/MCB25014
 
 cvmfs_role: client
 galaxy_cvmfs_repos_enabled: true

@@ -9,7 +9,7 @@ galaxy_instance_codename: dev
 galaxy_instance_hostname: cfde-galaxy-dev.tacc.utexas.edu
 galaxy_db_host: /var/run/postgresql
 galaxy_local_root: /srv/galaxy/dev
-galaxy_shared_root: "{{ tacc_corral_root }}/galaxy/dev"
+galaxy_shared_root: "{{ corral_root }}/galaxy/dev"
 
 galaxy_repo: https://github.com/natefoo/galaxy.git
 galaxy_commit_id: tapis-auth_24.2

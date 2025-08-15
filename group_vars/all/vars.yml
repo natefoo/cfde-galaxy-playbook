@@ -1,6 +1,7 @@
 ---
 
 postfix_root_address: "{{ vault_postfix_root_address }}"
+pulsar_amqp_password: "{{ vault_pulsar_amqp_password }}"
 
 # This is used by a variety of galaxyproject.* roles
 pip_virtualenv_command: /usr/bin/python3.12 -m venv
@@ -97,6 +98,11 @@ corral_root: /corral/projects/MCB25014
 
 cvmfs_role: client
 galaxy_cvmfs_repos_enabled: true
+
+pulsar_amqp_credentials: "prod_pulsar:{{ pulsar_amqp_password }}"
+pulsar_amqp_server: cfdeworkspace.org
+pulsar_amqp_vhost: /prod_pulsar
+pulsar_message_queue_url: "amqp://{{ pulsar_amqp_credentials }}@{{ pulsar_amqp_server }}:5671/{{ pulsar_amqp_vhost }}?ssl=1"
 
 job_execution_venv: "{{ galaxy_shared_root }}/ro/job_execution"
 job_execution_packages:

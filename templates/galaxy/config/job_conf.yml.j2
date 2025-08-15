@@ -13,6 +13,17 @@ runners:
     drmaa_library_path: /usr/lib64/libdrmaa.so.1
     invalidjobexception_retries: 5
     internalexception_retries: 5
+  ls6:
+    load: galaxy.jobs.runners.pulsar:PulsarMQJobRunner
+    manager: ls6_{{ galaxy_instance_codename }}
+    amqp_url: {{ pulsar_message_queue_url }}
+    galaxy_url: https://{{ galaxy_instance_hostname }}
+    #persistence_directory: /.../pulsar_amqp_ack
+    #amqp_acknowledge: true
+    #amqp_ack_republish_time: 1200
+    #amqp_consumer_timeout: 2.0
+    #amqp_publish_retry: true
+    #amqp_publish_retry_max_retries: 60
 
 handling:
   assign:

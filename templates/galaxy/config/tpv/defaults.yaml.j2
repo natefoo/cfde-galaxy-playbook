@@ -62,6 +62,67 @@ destinations:
       # for TPV shared DB
       - docker
 
+  ls6:
+    runner: ls6
+    min_accepted_cores: 1
+    min_accepted_mem: 0
+    context:
+      time: "48:00:00"
+    params:
+      tmp_dir: true
+      outputs_to_working_directory: false
+      remote_metadata: false
+      transport: curl
+      dependency_resolution: local
+      rewrite_parameters: true
+      # corral is mounted
+      #default_file_action: copy
+      #default_file_action: remote_transfer
+      default_file_action: remote_copy
+      # using UUIDs so not separated by instance
+      jobs_directory: /scratch/10611/cfdecloud/jobs
+      singularity_enabled: true
+      singularity_volumes: "/cvmfs/data.galaxyproject.org:ro,/cvmfs/brc.galaxyproject.org:ro,/tmp:/tmp:rw,/tmp:/var/tmp:rw"
+      singularity_no_mount: null
+      singularity_cmd: $CVMFSEXEC_PATH -N data.galaxyproject.org brc.galaxyproject.org singularity.galaxyproject.org -- apptainer
+      container_resolvers:
+      - type: explicit_singularity
+      - type: cached_mulled_singularity
+        cache_directory: /cvmfs/singularity.galaxyproject.org/all
+        cache_directory_cacher_type: dir_mtime
+      - type: mulled_singularity
+      require_container: true
+      submit_native_specification: "--nodes=1 --ntasks={int(cores)} --ntasks-per-node={int(cores)} --time={time} --partition=vm-small"
+    rules:
+    - if: mem >= 32 or cores >= 16
+      params:
+        submit_native_specification: "--nodes=1 --ntasks={int(cores)} --ntasks-per-node={int(cores)} --time={time} --partition=normal"
+    env:
+    - file: /etc/profile.d/z01_lmod.sh
+    - execute: module unload xalt
+    - execute: module load tacc-apptainer
+    - name: GALAXY_SLOTS
+      value: "$SLURM_NTASKS"
+    - name: TRINITY_SCRATCH_DIR
+      value: /tmp
+    - name: SINGULARITYENV_TRINITY_SCRATCH_DIR
+      value: $TRINITY_SCRATCH_DIR
+    - execute: '[ "$SLURM_JOB_PARTITION" = "normal" ] && export GALAXY_MEMORY_MB=253952 || export GALAXY_MEMORY_MB=28672'
+    # LS6 /scratch doesn't support cross-dir hard links
+    - execute: CVMFSEXEC_DIR=$(mktemp -dt cvmfsexec-XXXXXX)
+    - name: CVMFSEXEC_PATH
+      #value: $(readlink -f $_GALAXY_JOB_DIR/../cvmfsexec)
+      value: $CVMFSEXEC_DIR/cvmfsexec
+    - execute: cp "$HOME/bin/cvmfsexec" "$CVMFSEXEC_PATH"
+    - name: APPTAINER_CACHEDIR
+      value: /scratch/10611/cfdecloud/apptainer_cache
+    - name: APPTAINER_PYTHREADS
+      value: "9"
+    scheduling:
+      require:
+      - pulsar
+      - ls6
+
 tools:
 
   _default_tool:
@@ -102,3 +163,10 @@ tools:
   __SET_METADATA__: {inherits: _conda_direct}
   export_remote: {inherits: _conda_direct}
   CONVERTER_.*: {inherits: _conda_direct}
+
+  # TEST TEST TEST
+  secure_hash_message_digest:
+    scheduling:
+      require:
+      - pulsar
+      - ls6

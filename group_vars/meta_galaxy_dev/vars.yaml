@@ -56,9 +56,12 @@ galaxy_config:
     database_connection: "postgresql:///galaxy_{{ galaxy_instance_codename }}"
     install_database_connection: "sqlite:////cvmfs/cloud.galaxyproject.org/var/install.sqlite?isolation_level=IMMEDIATE"
     builds_file_path: "{{ galaxy_server_dir }}/tool-data/shared/ucsc/builds.txt"
-    file_path: "{{ galaxy_shared_rw_root }}/objects"
+    file_path: "{{ galaxy_config_file_path }}"
     tool_path: "{{ galaxy_shared_ro_root }}/tools"
     tool_data_path: "{{ galaxy_shared_rw_root }}/tool-data"
+    tool_data_table_config_path:
+      - /cvmfs/data.galaxyproject.org/byhand/location/tool_data_table_conf.xml
+      - /cvmfs/data.galaxyproject.org/managed/location/tool_data_table_conf.xml
     shed_tool_config_file: /cvmfs/cloud.galaxyproject.org/config/shed_tool_conf.xml
     object_store_store_by: uuid
     id_secret: "{{ vault_galaxy_config_id_secret }}"

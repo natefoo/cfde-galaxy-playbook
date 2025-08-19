@@ -31,6 +31,7 @@ galaxy_server_dir: "{{ galaxy_local_ro_root }}/server"
 #galaxy_reports_config_file: "{{ galaxy_config_dir }}/reports.yml"
 
 galaxy_config_gunicorn_bind: localhost:8080
+galaxy_config_file_path: "{{ galaxy_shared_rw_root }}/objects"
 
 #galaxy_tmpclean_dirs:
 #  - "{{ galaxy_job_working_directory }}"
@@ -84,6 +85,14 @@ galaxy_job_conf_singularity_volumes:
     - "$default_file_path:ro"
     #- "{{ job_execution_venv }}:ro"
     - "/cvmfs/data.galaxyproject.org:ro"
+  ls6:
+    - "$tool_directory:ro"
+    - "$working_directory:rw"
+    - "$job_directory:ro"
+    - "$default_file_path:ro"
+    - "/cvmfs/data.galaxyproject.org:ro"
+    - "/tmp:/tmp:rw"
+    - "/tmp:/var/tmp:rw"
 
 galaxy_job_conf_singularity_default_container_id: /cvmfs/main.galaxyproject.org/singularity/rockylinux:9.5.20241118--0
 
@@ -94,6 +103,8 @@ galaxy_config_templates:
     dest: "{{ galaxy_config.galaxy.oidc_config_file }}"
   - src: templates/galaxy/config/oidc_backends_config.xml.j2
     dest: "{{ galaxy_config.galaxy.oidc_backends_config_file }}"
+  - src: templates/galaxy/config/pulsar_ls6_file_actions.yaml.j2
+    dest: "{{ galaxy_config_dir }}/pulsar_ls6_file_actions.yaml"
   # TODO: add lint role to collection and use that
   - src: templates/galaxy/config/tpv/defaults.yaml.j2
     dest: "{{ tpv_config_dir }}/defaults.yaml"

@@ -47,6 +47,10 @@ execution:
         #- "{{ tpv_config_dir }}/environments.yaml"
         #- "{{ tpv_config_dir }}/tools.yaml"
 
+#tools:
+#  - class: local
+#    environment: slurm_conda_direct_galaxy
+
 limits:
   - type: registered_user_concurrent_jobs
     value: 20

@@ -61,6 +61,7 @@ galaxy_config:
     install_database_connection: "sqlite:////cvmfs/cloud.galaxyproject.org/var/install.sqlite?isolation_level=IMMEDIATE"
     builds_file_path: "{{ galaxy_server_dir }}/tool-data/shared/ucsc/builds.txt"
     file_path: "{{ galaxy_config_file_path }}"
+    tool_config_file: "{{ galaxy_config_dir }}/tool_conf.xml"
     tool_path: "{{ galaxy_shared_ro_root }}/tools"
     tool_data_path: "{{ galaxy_shared_rw_root }}/tool-data"
     shed_tool_config_file: /cvmfs/cloud.galaxyproject.org/config/shed_tool_conf.xml

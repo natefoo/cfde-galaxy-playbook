@@ -117,6 +117,7 @@ job_execution_packages:
   # first version is 25.0
   #- "galaxy-tool-util-models=={{ galaxy_job_execution_version }}"
   - edam-ontology
+  - isa-rwval
   #- git+https://github.com/nsoranzo/isa-rwval.git@master#egg=isa-rwval
   # https://github.com/galaxyproject/galaxy/pull/20209 fixed in 24.2.4
   #- "galaxy-config=={{ galaxy_job_execution_version }}"

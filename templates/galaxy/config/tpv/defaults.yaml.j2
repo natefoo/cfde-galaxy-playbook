@@ -93,11 +93,13 @@ destinations:
         cache_directory_cacher_type: dir_mtime
       - type: mulled_singularity
       require_container: true
-      submit_native_specification: "--nodes=1 --ntasks={int(cores)} --ntasks-per-node={int(cores)} --time={time} --partition=vm-small"
+      #submit_native_specification: "--nodes=1 --ntasks={int(cores)} --ntasks-per-node={int(cores)} --time={time} --partition=vm-small"
+      submit_native_specification: "--nodes=1 --ntasks={int(cores if force_coresi else 16)} --time={time} --partition=vm-small"
     rules:
     - if: mem >= 32 or cores >= 16
       params:
-        submit_native_specification: "--nodes=1 --ntasks={int(cores)} --ntasks-per-node={int(cores)} --time={time} --partition=normal"
+        #submit_native_specification: "--nodes=1 --ntasks={int(cores)} --ntasks-per-node={int(cores)} --time={time} --partition=normal"
+        submit_native_specification: "--nodes=1 --ntasks={int(cores if force_cores else 128)} --time={time} --partition=normal"
     env:
     - file: /etc/profile.d/z01_lmod.sh
     - execute: module unload xalt
@@ -120,7 +122,7 @@ destinations:
     - name: APPTAINER_PYTHREADS
       value: "9"
     scheduling:
-      require:
+      accept:
       - pulsar
       - ls6
 
@@ -132,6 +134,7 @@ tools:
     mem: cores * 3.7
     context:
       time: "48:00:00"
+      force_cores: false
     params:
       use_metadata_binary: true
     env:

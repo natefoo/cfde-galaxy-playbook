@@ -1,0 +1,29 @@
+---
+# Install/Manage Pulsar
+
+- name: Pulsar
+  hosts: pulsar_servers
+  #handlers:
+  #  - name: supervisor restart pulsar
+  #    supervisorctl:
+  #      name: "{{ galaxy_instance_codename }}_pulsar"
+  #      state: restarted
+  #      supervisorctl_path: "{{ supervisord_prefix }}/bin/supervisorctl"
+  #      config: "{{ supervisord_conf_path }}"
+  pre_tasks:
+    - name: Create directories
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        mode: "{{ item.mode | default(omit) }}"
+        state: directory
+      loop: "{{ pulsar_directories }}"
+  roles:
+    - role: galaxyproject.miniconda
+      when: miniconda_prefix is defined
+      tags: conda
+    - role: galaxyproject.pulsar
+      tags: pulsar
+    - role: galaxyproject.cvmfsexec
+      tags: cvmfsexec
+    - role: galaxyproject.general.supervisor
+      tags: supervisor

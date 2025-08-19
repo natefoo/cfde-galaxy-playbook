@@ -3,8 +3,12 @@
 roles:
   - name: galaxyproject.cvmfs
     version: 0.3.0
+  - name: galaxyproject.cvmfsexec
+    version: 1.1.2
   - name: galaxyproject.gxadmin
     version: 0.0.13
+  - name: galaxyproject.miniconda
+    version: 0.3.3
   - name: galaxyproject.nginx
     version: 1.0.0
   - name: galaxyproject.postfix
@@ -13,6 +17,8 @@ roles:
     version: 1.1.7
   - name: galaxyproject.postgresql_objects
     version: 1.2.0
+  - name: galaxyproject.pulsar
+    version: 1.0.11
   - name: galaxyproject.slurm
     version: 1.0.4
   - name: galaxyproject.rabbitmq

@@ -12,6 +12,9 @@ stack: sudo
 galaxy: sudo
 	ansible-playbook -i inventory/cfde.yaml playbook-galaxy.yaml --limit=$(HOSTNAME)
 
+pulsar:
+	ansible-playbook -i inventory/cfde.yaml playbook-pulsar.yaml
+
 requirements:
 	ansible-galaxy role install -p roles -r requirements.yaml
 	ansible-galaxy collection install -p collections -r requirements.yaml

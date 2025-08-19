@@ -125,3 +125,12 @@ all:
         ansible_user: root
       hosts:
         #foo: {ansible_host: 10.0.0.1}
+
+    pulsar_servers:
+      vars:
+        ansible_user: cfdecloud
+        ansible_become: false
+        ansible_connection: ssh
+        ansible_ssh_executable: ./.ssh-keyboard-interactive
+      hosts:
+        login2.ls6.tacc.utexas.edu:

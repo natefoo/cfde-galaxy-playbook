@@ -1,0 +1,18 @@
+;;
+;; This file is maintained by Ansible - CHANGES WILL BE OVERWRITTEN
+;;
+
+[program:pulsar]
+command         = {{ pulsar_venv_dir }}/bin/pulsar-main -c {{ pulsar_config_dir }}
+directory       = {{ pulsar_root }}
+umask           = 022
+autostart       = true
+autorestart     = true
+startsecs       = 15
+numprocs        = 1
+stopsignal      = INT
+stopasgroup     = true
+killasgroup     = true
+stdout_logfile  = {{ pulsar_root }}/log/pulsar.log
+redirect_stderr = true
+environment     = {{ (pulsar_supervisor_env | default(['PATH="' ~ pulsar_venv_dir ~ '/bin:%(ENV_PATH)s"'])) | join(',') }}

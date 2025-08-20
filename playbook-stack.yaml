@@ -51,6 +51,14 @@
   tags:
     - galaxy
 
+- name: gxadmin
+  hosts: galaxy_db_servers
+  roles:
+    - role: galaxyproject.gxadmin
+  tags:
+    - galaxy
+    - gxadmin
+
 - name: NGINX
   hosts: galaxy_servers
   roles:

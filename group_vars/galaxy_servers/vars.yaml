@@ -86,12 +86,12 @@ galaxy_job_conf_singularity_volumes:
     #- "{{ job_execution_venv }}:ro"
     - "/cvmfs/data.galaxyproject.org:ro"
   ls6:
-    - "$tool_directory:ro"
-    - "$working_directory:rw"
     - "$job_directory:ro"
+    - "$tool_directory:ro"
     - "$job_directory/outputs:rw"
     - "$job_directory/tmp:rw"
     - "$job_directory/home:rw"
+    - "$working_directory:rw"
     - "$default_file_path:ro"
     - "/cvmfs/data.galaxyproject.org:ro"
     - "/tmp:/tmp:rw"
@@ -135,3 +135,7 @@ nginx_ssl_config_profile: modern
 nginx_conf_ssl_certificate: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/fullchain.pem"
 nginx_conf_ssl_certificate_key: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/privkey.pem"
 nginx_conf_ssl_trusted_certificate: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/fullchain.pem"
+
+gxadmin_dir: "/opt/gxadmin"
+gxadmin_bin_dir: "/usr/bin"
+gxadmin_create_bin_dir: false

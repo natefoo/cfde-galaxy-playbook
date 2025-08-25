@@ -2,7 +2,8 @@
 
 tapis_oidc_client_id: cfde-galaxy-dev
 tapis_oidc_client_secret: "{{ vault_tapis_oidc_client_secret }}"
-#tapis_oidc_redirect_uri: "http://{{ galaxy_instance_hostname }}/authnz/tapis/callback"
+galaxy_config_admin_users: "{{ vault_galaxy_config_admin_users }}"
+galaxy_config_error_email_to: "{{ vault_galaxy_config_error_email_to }}"
 
 galaxy_user: cfdecloud
 galaxy_instance_codename: dev
@@ -52,7 +53,7 @@ galaxy_config:
           HDF5_USE_FILE_LOCKING: "FALSE"
   galaxy:
     brand: "CFDE Cloud DEV"
-    #admin_users: "{{ vault_galaxy_config_admin_users }}"
+    admin_users: "{{ vault_galaxy_config_admin_users }}"
     database_connection: "postgresql:///galaxy_{{ galaxy_instance_codename }}"
     install_database_connection: "sqlite:////cvmfs/cloud.galaxyproject.org/var/install.sqlite?isolation_level=IMMEDIATE"
     builds_file_path: "{{ galaxy_server_dir }}/tool-data/shared/ucsc/builds.txt"
@@ -69,8 +70,8 @@ galaxy_config:
     id_secret: "{{ vault_galaxy_config_id_secret }}"
     job_config_file: "{{ galaxy_config_dir }}/job_conf.yml"
     smtp_server: localhost
-    #error_email_to: galaxy@example.org
-    #email_from: "Galaxy <galaxy@example.org>"
+    error_email_to: "{{ galaxy_config_error_email_to }}"
+    email_from: "CFDE Galaxy DEV <{{ galaxy_config_error_email_to }}>"
     galaxy_infrastructure_url: "https://{{ galaxy_instance_hostname }}"
     # Auth config
     enable_oidc: true

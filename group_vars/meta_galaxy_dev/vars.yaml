@@ -12,10 +12,10 @@ galaxy_db_host: /var/run/postgresql
 galaxy_local_root: /srv/galaxy/dev
 galaxy_shared_root: "{{ corral_root }}/galaxy/dev"
 
-galaxy_repo: https://github.com/natefoo/galaxy.git
-galaxy_commit_id: tapis-auth_24.2
-#galaxy_commit_id: release_24.2
-galaxy_job_execution_version: "24.2.4"
+#galaxy_repo: https://github.com/natefoo/galaxy.git
+#galaxy_commit_id: tapis-auth_24.2
+galaxy_commit_id: release_25.0
+galaxy_job_execution_version: "25.0.2"
 
 galaxy_config:
   gravity:

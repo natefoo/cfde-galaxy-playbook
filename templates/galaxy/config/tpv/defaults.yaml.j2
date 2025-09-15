@@ -95,7 +95,7 @@ destinations:
       - type: mulled_singularity
       require_container: true
       #submit_native_specification: "--nodes=1 --ntasks={int(cores)} --ntasks-per-node={int(cores)} --time={time} --partition=vm-small"
-      submit_native_specification: "--nodes=1 --ntasks={int(cores if force_coresi else 16)} --time={time} --partition=vm-small"
+      submit_native_specification: "--nodes=1 --ntasks={int(cores if force_cores else 16)} --time={time} --partition=vm-small"
     rules:
     - if: mem >= 32 or cores >= 16
       params:

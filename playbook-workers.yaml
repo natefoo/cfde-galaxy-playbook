@@ -8,3 +8,5 @@
       tags: cvmfs
     - role: galaxyproject.slurm
       tags: slurm
+    - role: geerlingguy.docker
+      tags: docker

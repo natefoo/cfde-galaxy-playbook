@@ -13,8 +13,8 @@
   post_tasks:
     - name: Copy epilog script
       ansible.builtin.copy:
-        src: files/slurm/epilog.bash
-        dest: /etc/slurm/epilog.bash
+        src: files/slurm/epilog.sh
+        dest: /etc/slurm/epilog.sh
         mode: "0755"
         owner: root
         group: root

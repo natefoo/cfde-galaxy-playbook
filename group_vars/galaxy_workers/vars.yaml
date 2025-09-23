@@ -2,4 +2,5 @@
 
 docker_install_compose_plugin: false
 docker_install_compose: false
-docker_users: "{{ galaxy_user }}"
+docker_users:
+  - cfdecloud

@@ -10,3 +10,11 @@
       tags: slurm
     - role: geerlingguy.docker
       tags: docker
+  post_tasks:
+    - name: Copy epilog script
+      ansible.builtin.copy:
+        - src: files/slurm/epilog.bash
+          dest: /etc/slurm/epilog.bash
+          mode: "0755"
+          owner: root
+          group: root

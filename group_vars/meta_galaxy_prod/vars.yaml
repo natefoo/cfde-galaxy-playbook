@@ -5,6 +5,9 @@ tapis_oidc_client_secret: "{{ vault_tapis_oidc_client_secret }}"
 galaxy_config_admin_users: "{{ vault_galaxy_config_admin_users }}"
 galaxy_config_error_email_to: "{{ vault_galaxy_config_error_email_to }}"
 
+galaxy_interactivetoolsproxy_map: "{{ galaxy_local_rw_root }}/gxit-proxy-map.sqlite"
+galaxy_gxit_proxy_port: 8910
+
 galaxy_user: cfdecloud
 galaxy_instance_codename: prod
 galaxy_instance_hostname: cfdeworkspace.org
@@ -16,10 +19,15 @@ galaxy_db_host: /var/run/postgresql
 galaxy_local_root: /srv/galaxy/prod
 galaxy_shared_root: "{{ corral_root }}/galaxy/prod"
 
-galaxy_repo: https://github.com/natefoo/galaxy.git
-galaxy_commit_id: tapis-auth_24.2
-#galaxy_commit_id: release_24.2
-galaxy_job_execution_version: "24.2.4"
+#galaxy_repo: https://github.com/natefoo/galaxy.git
+#galaxy_commit_id: tapis-auth_24.2
+galaxy_commit_id: release_25.0
+galaxy_job_execution_version: "25.0.2"
+
+galaxy_local_tools_dir: "{{ galaxy_local_ro_root }}/local_tools"
+galaxy_local_tools:
+  - section_name: Interactive Tools
+    file: interactivetool_rstudio_bioc_3.20.xml
 
 galaxy_config:
   gravity:
@@ -46,6 +54,11 @@ galaxy_config:
       upload_dir: "{{ galaxy_tus_upload_store }}"
       environment:
         HDF5_USE_FILE_LOCKING: "FALSE"
+    gx_it_proxy:
+      enable: true
+      ip: localhost
+      port: "{{ galaxy_gxit_proxy_port }}"
+      sessions: "{{ galaxy_interactivetoolsproxy_map }}"
     handlers:
       handler:
         name_template: "handler{process}"
@@ -62,14 +75,14 @@ galaxy_config:
     install_database_connection: "sqlite:////cvmfs/cloud.galaxyproject.org/var/install.sqlite?isolation_level=IMMEDIATE"
     builds_file_path: "{{ galaxy_server_dir }}/tool-data/shared/ucsc/builds.txt"
     file_path: "{{ galaxy_config_file_path }}"
-    tool_config_file: "{{ galaxy_config_dir }}/tool_conf.xml"
+    tool_config_file: "{{ galaxy_config_dir }}/tool_conf.xml,{{ galaxy_config_dir }}/local_tool_conf.xml"
     sanitize_allowlist_file: "{{ galaxy_mutable_config_dir }}/sanitize_allowlist.txt"
     tool_path: "{{ galaxy_shared_ro_root }}/tools"
     tool_data_path: "{{ galaxy_shared_rw_root }}/tool-data"
-    shed_tool_config_file: /cvmfs/cloud.galaxyproject.org/config/shed_tool_conf.xml
     tool_data_table_config_path:
       - /cvmfs/data.galaxyproject.org/byhand/location/tool_data_table_conf.xml
       - /cvmfs/data.galaxyproject.org/managed/location/tool_data_table_conf.xml
+    shed_tool_config_file: /cvmfs/cloud.galaxyproject.org/config/shed_tool_conf.xml
     object_store_store_by: uuid
     id_secret: "{{ vault_galaxy_config_id_secret }}"
     job_config_file: "{{ galaxy_config_dir }}/job_conf.yml"
@@ -119,3 +132,8 @@ galaxy_config:
       - type: meminfo
       - type: uname
       - type: cgroup
+    # Interactive Tools
+    interactivetools_enable: true
+    interactivetools_proxy_host: "{{ galaxy_instance_hostname }}"
+    interactivetoolsproxy_map: "sqlite:///{{ galaxy_interactivetoolsproxy_map }}"
+    interactivetools_prefix: gxit

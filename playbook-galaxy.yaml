@@ -9,8 +9,7 @@
         path: "{{ galaxy_local_tools_dir }}"
         state: directory
         mode: "0755"
-      when: _galaxy_local_tools is defined
-      become_user: "{{ galaxy_user }}"
+      when: galaxy_local_tools is defined
   roles:
     - role: galaxyproject.galaxy.venv
     - role: galaxyproject.galaxy.clone

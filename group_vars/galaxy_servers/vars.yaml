@@ -19,6 +19,7 @@ galaxy_separate_privileges: true
 galaxy_layout: root-dir
 galaxy_root: "{{ galaxy_local_root }}"
 galaxy_tus_upload_store: "{{ galaxy_shared_rw_root }}/upload"
+galaxy_pulsar_embedded_staging_directory: "{{ corral_root }}/pulsar/{{ galaxy_instance_codename }}/jobs"
 
 galaxy_mutable_config_backup_dir: "files/galaxy/var/{{ galaxy_instance_codename }}"
 
@@ -99,6 +100,9 @@ galaxy_job_conf_singularity_volumes:
 
 galaxy_job_conf_singularity_default_container_id: /cvmfs/main.galaxyproject.org/singularity/rockylinux:9.5.20241118--0
 
+galaxy_gxit_port_start: 32768
+galaxy_gxit_port_end: 32968
+
 galaxy_config_templates:
   - src: templates/galaxy/config/job_conf.yml.j2
     dest: "{{ galaxy_config.galaxy.job_config_file }}"
@@ -116,7 +120,10 @@ galaxy_config_files:
   - src: files/galaxy/config/auth_conf.xml
     dest: "{{ galaxy_config.galaxy.auth_config_file }}"
   - src: files/galaxy/config/tool_conf.xml
-    dest: "{{ galaxy_config.galaxy.tool_config_file }}"
+    dest: "{{ galaxy_config_dir }}/tool_conf.xml"
+  # FIXME: this only works because we run the playbook on the server
+  - src: "{{ galaxy_server_dir }}/tools/interactive/Rprofile.R"
+    dest: "{{ galaxy_local_tools_dir }}/Rprofile.R"
 
 # NGINX
 nginx_conf_user: nginx

@@ -18,3 +18,10 @@
         mode: "0755"
         owner: root
         group: root
+    - name: Copy gxit-port script
+      ansible.builtin.template:
+        src: galaxy/gxit-port.sh.j2
+        dest: /usr/local/bin/gxit-port.sh
+        mode: "0755"
+        owner: root
+        group: root

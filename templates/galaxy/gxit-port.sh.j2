@@ -1,0 +1,15 @@
+#!/bin/bash
+set -euo pipefail
+
+START={{ galaxy_gxit_port_start }}
+END={{ galaxy_gxit_port_end }}
+
+for port in $(seq $START $END); do
+    if ! ss -ltn 2>/dev/null | awk '{print $4}' | grep -q ":$port\$"; then
+        echo $port
+        exit 0
+    fi
+done
+
+echo "ERROR: No free ports found in range $START-$END" >&2
+exit 1

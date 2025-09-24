@@ -3,6 +3,14 @@
 
 - name: Galaxy
   hosts: galaxy_servers
+  pre_tasks:
+    - name: Create local tools dir
+      file:
+        path: "{{ galaxy_local_tools_dir }}"
+        state: directory
+        mode: "0755"
+      when: _galaxy_local_tools is defined
+      become_user: "{{ galaxy_user }}"
   roles:
     - role: galaxyproject.galaxy.venv
     - role: galaxyproject.galaxy.clone

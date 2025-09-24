@@ -13,6 +13,16 @@ runners:
     drmaa_library_path: /usr/lib64/libdrmaa.so.1
     invalidjobexception_retries: 5
     internalexception_retries: 5
+  slurm_pulsar:
+    load: galaxy.jobs.runners.pulsar:PulsarEmbeddedJobRunner
+    pulsar_app_config:
+      staging_directory: "{{ galaxy_pulsar_embedded_staging_directory }}"
+      conda_auto_init: false
+      # needed for a mkdir in the conda code
+      conda_prefix: "{{ galaxy_shared_rw_root }}/tmp"
+      managers:
+        _default_:
+          type: queued_drmaa
   ls6:
     load: galaxy.jobs.runners.pulsar:PulsarMQJobRunner
     manager: ls6_{{ galaxy_instance_codename }}

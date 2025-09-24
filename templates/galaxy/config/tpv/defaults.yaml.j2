@@ -62,6 +62,38 @@ destinations:
       # for TPV shared DB
       - docker
 
+  slurm_gxit:
+    runner: slurm_pulsar
+    min_accepted_cores: 1
+    min_accepted_mem: 0
+    max_accepted_cores: 4
+    max_accepted_mem: 32
+    params:
+      submit_native_specification: "--nodes=1 --ntasks={int(cores)} --mem={round(mem*1024)} --time={time} --partition=normal"
+      tmp_dir: true
+      outputs_to_working_directory: false
+      #metadata_strategy: extended
+      singularity_enabled: false
+      docker_enabled: true
+      docker_set_user: null
+      docker_memory: "{mem}G"
+      docker_volumes: "$job_directory:ro,$job_directory/outputs:rw,$working_directory:rw"
+      container_monitor_command: "{{ job_execution_venv }}/bin/galaxy-container-monitor"
+      container_monitor_result: callback
+      container_resolvers:
+      - type: explicit
+      require_container: true
+      remote_metadata: false
+      transport: curl
+      default_file_action: "copy"
+      dependency_resolution: remote
+      rewrite_parameters: true
+      jobs_directory: "{{ galaxy_pulsar_embedded_staging_directory }}"
+    scheduling:
+      accept:
+      - cvmfs
+      - gxit
+
   ls6:
     runner: ls6
     min_accepted_cores: 1
@@ -168,6 +200,23 @@ tools:
   __SET_METADATA__: {inherits: _conda_direct}
   export_remote: {inherits: _conda_direct}
   CONVERTER_.*: {inherits: _conda_direct}
+
+  interactive_tool_*:
+    scheduling:
+      require:
+      - gxit
+
+  interactive_tool_jupyter_notebook:
+    params:
+      docker_run_extra_arguments: "-e NB_UID=$(id -u) -p $(/usr/local/bin/gxit-port.sh):8888"
+
+  interactive_tool_rstudio:
+    params:
+      docker_run_extra_arguments: "-e USERID=$(id -u) -e GROUPID=$(id -g) -p $(/usr/local/bin/gxit-port.sh):8780"
+      container_override:
+      - type: docker
+        shell: /bin/bash
+        identifier: afgane/bioc-galaxy:3.21
 
   # TEST TEST TEST
   secure_hash_message_digest:

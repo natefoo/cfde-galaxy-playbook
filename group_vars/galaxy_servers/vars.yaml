@@ -142,7 +142,7 @@ nginx_ssl_servers:
 nginx_enable_default_server: false
 #nginx_default_redirect_uri: "https://{{ galaxy_instance_hostname }}$request_uri"
 nginx_conf_http:
-  client_max_body_size: 10g
+  client_max_body_size: 50g
   proxy_read_timeout: 300
 nginx_ssl_config_profile: modern
 nginx_conf_ssl_certificate: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/fullchain.pem"

@@ -19,9 +19,9 @@ galaxy_db_host: /var/run/postgresql
 galaxy_local_root: /srv/galaxy/prod
 galaxy_shared_root: "{{ corral_root }}/galaxy/prod"
 
-#galaxy_repo: https://github.com/natefoo/galaxy.git
-#galaxy_commit_id: tapis-auth_24.2
-galaxy_commit_id: release_25.0
+galaxy_repo: https://github.com/natefoo/galaxy.git
+galaxy_commit_id: cfde
+#galaxy_commit_id: release_25.0
 galaxy_job_execution_version: "25.0.2"
 
 galaxy_local_tools_dir: "{{ galaxy_local_ro_root }}/local_tools"

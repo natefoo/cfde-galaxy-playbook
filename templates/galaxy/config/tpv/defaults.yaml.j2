@@ -213,7 +213,7 @@ tools:
 
   interactive_tool_jupyter_notebook:
     params:
-      docker_run_extra_arguments: "-e NB_UID=$(id -u) -p $(/usr/local/bin/gxit-port.sh):8888"
+      docker_run_extra_arguments: "-e NB_UID=$(id -u) -e NB_GID=$(id -g) -p $(/usr/local/bin/gxit-port.sh):8888"
 
   interactive_tool_rstudio:
     params:

@@ -202,22 +202,26 @@ tools:
 
   upload1: {inherits: _conda_direct_galaxy}
   __DATA_FETCH__: {inherits: _conda_direct_galaxy}
-  __SET_METADATA__: {inherits: _conda_direct}
-  export_remote: {inherits: _conda_direct}
+  __SET_METADATA__: {inherits: _conda_direct_galaxy}
+  export_remote: {inherits: _conda_direct_galaxy}
   CONVERTER_.*: {inherits: _conda_direct}
 
   interactive_tool_*:
+    params:
+      docker_host_port_cmd: /usr/local/bin/gxit-port.sh
     scheduling:
       require:
       - gxit
 
   interactive_tool_jupyter_notebook:
     params:
-      docker_run_extra_arguments: "-e NB_UID=$(id -u) -e NB_GID=$(id -g) -p $(/usr/local/bin/gxit-port.sh):8888"
+      #docker_run_extra_arguments: "-e NB_UID=$(id -u) -e NB_GID=$(id -g) -p $(/usr/local/bin/gxit-port.sh):8888"
+      docker_run_extra_arguments: "-e NB_UID=$(id -u) -e NB_GID=$(id -g)"
 
   interactive_tool_rstudio:
     params:
-      docker_run_extra_arguments: "-e USERID=$(id -u) -e GROUPID=$(id -g) -p $(/usr/local/bin/gxit-port.sh):8780"
+      #docker_run_extra_arguments: "-e USERID=$(id -u) -e GROUPID=$(id -g) -p $(/usr/local/bin/gxit-port.sh):8780"
+      docker_run_extra_arguments: "-e USERID=$(id -u) -e GROUPID=$(id -g)"
       container_override:
       - type: docker
         shell: /bin/bash

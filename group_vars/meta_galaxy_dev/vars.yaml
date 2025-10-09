@@ -20,10 +20,10 @@ galaxy_commit_id: cfde
 #galaxy_commit_id: release_25.0
 galaxy_job_execution_version: "25.0.2"
 
-galaxy_local_tools_dir: "{{ galaxy_local_ro_root }}/local_tools"
-galaxy_local_tools:
-  - section_name: Interactive Tools
-    file: interactivetool_rstudio_bioc_3.20.xml
+#galaxy_local_tools_dir: "{{ galaxy_local_ro_root }}/local_tools"
+#galaxy_local_tools:
+#  - section_name: Interactive Tools
+#    file: interactivetool_rstudio_bioc_3.20.xml
 
 galaxy_config:
   gravity:
@@ -72,7 +72,7 @@ galaxy_config:
     builds_file_path: "{{ galaxy_server_dir }}/tool-data/shared/ucsc/builds.txt"
     file_path: "{{ galaxy_config_file_path }}"
     new_file_path: "{{ galaxy_config_new_file_path }}"
-    tool_config_file: "{{ galaxy_config_dir }}/tool_conf.xml,{{ galaxy_config_dir }}/local_tool_conf.xml"
+    tool_config_file: "{{ galaxy_config_dir }}/tool_conf.xml"
     sanitize_allowlist_file: "{{ galaxy_mutable_config_dir }}/sanitize_allowlist.txt"
     tool_path: "{{ galaxy_shared_ro_root }}/tools"
     tool_data_path: "{{ galaxy_shared_rw_root }}/tool-data"

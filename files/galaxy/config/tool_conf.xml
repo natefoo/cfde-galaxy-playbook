@@ -134,6 +134,8 @@
     <tool file="phenotype_association/master2pg.xml" />
   </section>
   <section id="interactive_tools" name="Interactive Tools">
+    <tool file="interactive/interactivetool_jupyter_notebook_1.0.1.xml" />
+    <tool file="interactive/interactivetool_rstudio_bioc_3.20.xml" />
   <!--
     <tool file="interactive/interactivetool_askomics.xml" />
     <tool file="interactive/interactivetool_bam_iobio.xml" />
@@ -143,9 +145,6 @@
     <tool file="interactive/interactivetool_ethercalc.xml" />
     <tool file="interactive/interactivetool_guacamole_desktop.xml" />
     <tool file="interactive/interactivetool_hicbrowser.xml" />
-  -->
-    <tool file="interactive/interactivetool_jupyter_notebook_1.0.1.xml" />
-  <!--
     <tool file="interactive/interactivetool_jupyter_notebook_1.0.0.xml" />
     <tool file="interactive/interactivetool_jupyter_notebook.xml" />
     <tool file="interactive/interactivetool_neo4j.xml" />
@@ -154,5 +153,13 @@
     <tool file="interactive/interactivetool_rstudio.xml" />
     <tool file="interactive/interactivetool_rstudio_bioc_3.20.xml" />
   -->
+  </section>
+  <section id="hubmap" name="HuBMAP">
+    <tool file="hubmap/hubmap_fastqc.xml" />
+    <tool file="hubmap/hubmap_adjust_barcodes.xml" />
+    <tool file="hubmap/hubmap_trim_reads.xml" />
+    <tool file="hubmap/hubmap_salmon_human.xml" />
+    <tool file="hubmap/hubmap_alevin_to_anndata.xml" />
+    <tool file="hubmap/hubmap_scvelo_analysis.xml" />
   </section>
 </toolbox>

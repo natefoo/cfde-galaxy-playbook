@@ -10,6 +10,16 @@
         state: directory
         mode: "0755"
       when: galaxy_local_tools is defined
+    - name: Create additional directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      become: true
+      become_user: "{{ galaxy_user }}"
+      loop:
+        - "{{ galaxy_shared_rw_root }}/tmp/apptainer_cache"
+        - "{{ galaxy_shared_rw_root }}/tmp/apptainer_tmp"
   roles:
     - role: galaxyproject.galaxy.venv
     - role: galaxyproject.galaxy.clone

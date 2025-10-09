@@ -55,6 +55,11 @@ destinations:
       singularity_volumes: "{{ galaxy_job_conf_singularity_volumes.local | join(',') }}"
       singularity_default_container_id: "{{ galaxy_job_conf_singularity_default_container_id }}"
       require_container: true
+    env:
+    - name: APPTAINER_CACHEDIR
+      value: {{ galaxy_shared_rw_root }}/tmp/apptainer_cache
+    - name: APPTAINER_TMPDIR
+      value: {{ galaxy_shared_rw_root }}/tmp/apptainer_tmp
     scheduling:
       accept:
       - general
@@ -217,6 +222,18 @@ tools:
       - type: docker
         shell: /bin/bash
         identifier: afgane/bioc-galaxy:3.21
+
+  hubmap_scrna_fastqc:
+    cores: 4
+    mem: 3.7
+
+  hubmap_salmon_human:
+    cores: 8
+    mem: 28
+
+  hubmap_trim_reads:
+    cores: 4
+    mem: 3.7
 
   # TEST TEST TEST
   secure_hash_message_digest:

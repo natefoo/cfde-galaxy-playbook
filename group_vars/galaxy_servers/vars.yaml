@@ -127,10 +127,10 @@ galaxy_config_files:
   - src: files/galaxy/config/cfde-data-access-fdaf817cf042.json
     dest: "{{ galaxy_config_dir }}/cfde-data-access-fdaf817cf042.json"
   # FIXME: this only works because we run the playbook on the server
-  - src: "{{ galaxy_server_dir }}/tools/interactive/Rprofile.R"
-    dest: "{{ galaxy_local_tools_dir }}/Rprofile.R"
-  - src: "{{ galaxy_server_dir }}/tools/interactive/bioconductor.png"
-    dest: "{{ galaxy_local_tools_dir }}/bioconductor.png"
+  #- src: "{{ galaxy_server_dir }}/tools/interactive/Rprofile.R"
+  #  dest: "{{ galaxy_local_tools_dir }}/Rprofile.R"
+  #- src: "{{ galaxy_server_dir }}/tools/interactive/bioconductor.png"
+  #  dest: "{{ galaxy_local_tools_dir }}/bioconductor.png"
 
 # NGINX
 nginx_conf_user: nginx

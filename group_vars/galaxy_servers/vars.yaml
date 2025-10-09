@@ -33,6 +33,7 @@ galaxy_server_dir: "{{ galaxy_local_ro_root }}/server"
 
 galaxy_config_gunicorn_bind: localhost:8080
 galaxy_config_file_path: "{{ galaxy_shared_rw_root }}/objects"
+galaxy_config_new_file_path: "{{ galaxy_shared_rw_root }}/scratch"
 
 #galaxy_tmpclean_dirs:
 #  - "{{ galaxy_job_working_directory }}"

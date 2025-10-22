@@ -37,12 +37,18 @@ galaxy_config:
     #log_dir: "{{ galaxy_log_dir }}"
     virtualenv: "{{ galaxy_venv_dir }}"
     gunicorn:
-      bind: "{{ galaxy_config_gunicorn_bind }}"
-      workers: 2
-      timeout: 600
-      preload: true
-      environment:
-        HDF5_USE_FILE_LOCKING: "FALSE"
+      - bind: "{{ galaxy_config_gunicorn_bind[0] }}"
+        workers: 1
+        timeout: 600
+        preload: true
+        environment:
+          HDF5_USE_FILE_LOCKING: "FALSE"
+      - bind: "{{ galaxy_config_gunicorn_bind[1] }}"
+        workers: 1
+        timeout: 600
+        preload: true
+        environment:
+          HDF5_USE_FILE_LOCKING: "FALSE"
     celery:
       enable: true
       enable_beat: true

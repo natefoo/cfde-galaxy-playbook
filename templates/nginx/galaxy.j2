@@ -1,3 +1,16 @@
+{% if galaxy_config_gunicorn_bind is string %}
+{% set _galaxy_config_gunicorn_bind = [galaxy_config_gunicorn_bind] %}
+{% else %}
+{% set _galaxy_config_gunicorn_bind = galaxy_config_gunicorn_bind %}
+{% endif -%}
+
+upstream galaxy {
+    least_conn;
+{% for bind in _galaxy_config_gunicorn_bind %}
+    server {{ bind }};
+{% endfor %}
+}
+
 {% if galaxy_instance_redirect_hostnames is defined %}
 server {
     listen *:443 ssl;
@@ -23,7 +36,7 @@ server {
     error_log   /var/log/nginx/{{ galaxy_instance_codename }}-error.log;
 
     location / {
-        proxy_pass         http://{{ galaxy_config_gunicorn_bind }};
+        proxy_pass         http://galaxy;
         proxy_redirect     off;
         proxy_set_header   Host              $host;
         proxy_set_header   X-Real-IP         $remote_addr;
@@ -32,7 +45,7 @@ server {
     }
 
     location ^~ /admin_toolshed/static {
-        proxy_pass         http://{{ galaxy_config_gunicorn_bind }};
+        proxy_pass         http://galaxy;
         proxy_redirect     off;
         proxy_set_header   Host              $host;
         proxy_set_header   X-Real-IP         $remote_addr;
@@ -57,7 +70,7 @@ server {
     }
 
     location ~ ^/api/jobs/[^/]+/files/?$ {
-        proxy_pass         http://{{ galaxy_config_gunicorn_bind }};
+        proxy_pass         http://galaxy;
         proxy_redirect     off;
         proxy_set_header   Host              $host;
         proxy_set_header   X-Real-IP         $remote_addr;
@@ -68,7 +81,7 @@ server {
     }
 
     location ~ ^/api/dataset_collections/([^/]+)/download/?$ {
-        proxy_pass         http://{{ galaxy_config_gunicorn_bind }};
+        proxy_pass         http://galaxy;
         proxy_redirect     off;
         proxy_set_header   Host              $host;
         proxy_set_header   X-Real-IP         $remote_addr;
@@ -79,7 +92,7 @@ server {
     }
 
     location ~ ^/api/libraries/[^/]+/contents/?$ {
-        proxy_pass         http://{{ galaxy_config_gunicorn_bind }};
+        proxy_pass         http://galaxy;
         proxy_redirect     off;
         proxy_set_header   Host              $host;
         proxy_set_header   X-Real-IP         $remote_addr;

@@ -240,6 +240,13 @@ tools:
         shell: /bin/bash
         identifier: afgane/bioc-galaxy:3.21
 
+  Filter1:
+    params:
+      container_override:
+      - type: singularity
+        shell: /bin/sh
+        identifier: /cvmfs/singularity.galaxyproject.org/all/python:3.13
+
   hubmap_scrna_fastqc:
     cores: 4
     mem: 3.7

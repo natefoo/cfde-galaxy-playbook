@@ -17,3 +17,28 @@
   bucket_name: motrpac-data-raw-pass1b-06
   service_account_json: {{ galaxy_config_dir }}/cfde-data-access-fdaf817cf042.json
   anonymous: false
+
+- type: ftp
+  id: ncbi-ftp
+  label: "NCBI FTP server"
+  doc: "NCBI FTP server"
+  host: "ftp.ncbi.nlm.nih.gov"
+  user: "anonymous"
+  passwd: ""
+  timeout: 10
+  port: 21
+
+- type: s3fs
+  label: Encyclopedia of DNA Elements (ENCODE)
+  id: encode-public
+  doc: The Encyclopedia of DNA Elements (ENCODE) Consortium is an international collaboration of research groups funded by the National Human Genome Research Institute (NHGRI)
+  bucket: encode-public
+  anon: true
+
+- type: s3fs
+  label: 1000 Genomes
+  id: 1000genomes
+  doc: Access to the 1000 Genomes Project with human genetic variation, including SNPs, structural variants, and their haplotype context.
+  bucket: 1000genomes
+  anon: true
+  listings_expiry_time: 60

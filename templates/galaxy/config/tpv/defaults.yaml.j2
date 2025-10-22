@@ -185,7 +185,20 @@ tools:
       - general
       reject:
       - offline
-    rules: []
+    rules:
+    - id: expression_tool
+      if: tool.tool_type == "expression"
+      params:
+        use_metadata_binary: false
+      env:
+      - name: GALAXY_VIRTUAL_ENV
+        value: $_GALAXY_VIRTUAL_ENV
+      scheduling:
+        require:
+        - conda
+        - galaxy
+        reject:
+        - pulsar
 
   _conda_direct:
     abstract: true

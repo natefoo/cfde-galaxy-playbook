@@ -51,6 +51,9 @@ tusd_systemd: false
 # used by nginx template
 galaxy_tusd_port: 1080
 
+# default is client-production-maps
+galaxy_client_make_target: client-production
+
 #galaxy_precreate_dirs:
 #  - "{{ galaxy_config_dir }}"
 #  - "{{ galaxy_mutable_config_dir }}"

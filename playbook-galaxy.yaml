@@ -34,6 +34,31 @@
       become_user: "{{ galaxy_user_name }}"
     - role: galaxyproject.galaxy.client
   post_tasks:
+    - name: Remove node_modules
+      file:
+        path: "{{ galaxy_server_dir }}/client/node_modules"
+        state: absent
+      diff: false
+
+    - name: Find plugin node_modules
+      find:
+        paths: "{{ galaxy_server_dir }}/config/plugins"
+        recurse: true
+        depth: 4    # should get plugins in plugin collection dirs
+        patterns: node_modules
+        file_type: directory
+      register: __galaxy_node_modules_dirs_result
+
+    - debug:
+        var: __galaxy_node_modules_dirs_result.files
+
+    - name: Remove plugin node_modules
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ __galaxy_node_modules_dirs_result.files }}"
+      diff: false
+
     - name: Deploy internal tools
       ansible.posix.synchronize:
         src: "{{ galaxy_server_dir }}/tools/"
@@ -42,6 +67,7 @@
         delete: true
       become_user: "{{ galaxy_user }}"
       delegate_to: "{{ inventory_hostname }}"
+
     - name: Create job_execution venv for galaxy-set-metadata
       ansible.builtin.pip:
         name:
@@ -51,11 +77,13 @@
         virtualenv: "{{ job_execution_venv }}"
         virtualenv_command: "{{ pip_virtualenv_command }}"
       become_user: "{{ galaxy_user }}"
+
     - name: Install galaxy-job-execution and extras
       ansible.builtin.pip:
         name: "{{ job_execution_packages }}"
         virtualenv: "{{ job_execution_venv }}"
       become_user: "{{ galaxy_user }}"
+
     - name: Copy welcome.html
       ansible.builtin.copy:
         src: files/galaxy/static/welcome.html

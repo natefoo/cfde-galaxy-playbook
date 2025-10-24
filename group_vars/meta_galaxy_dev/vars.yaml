@@ -11,6 +11,7 @@ galaxy_gxit_proxy_port: 8910
 galaxy_user: cfdecloud
 galaxy_instance_codename: dev
 galaxy_instance_hostname: cfde-galaxy-dev.tacc.utexas.edu
+galaxy_instance_certname: "{{ galaxy_instance_hostname }}"
 galaxy_db_host: /var/run/postgresql
 galaxy_local_root: /srv/galaxy/dev
 galaxy_shared_root: "{{ corral_root }}/galaxy/dev"

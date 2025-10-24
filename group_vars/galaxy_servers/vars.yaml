@@ -148,9 +148,9 @@ nginx_conf_http:
   client_max_body_size: 50g
   proxy_read_timeout: 300
 nginx_ssl_config_profile: modern
-nginx_conf_ssl_certificate: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/fullchain.pem"
-nginx_conf_ssl_certificate_key: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/privkey.pem"
-nginx_conf_ssl_trusted_certificate: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/fullchain.pem"
+nginx_conf_ssl_certificate: "/etc/letsencrypt/live/{{ galaxy_instance_certname }}/fullchain.pem"
+nginx_conf_ssl_certificate_key: "/etc/letsencrypt/live/{{ galaxy_instance_certname }}/privkey.pem"
+nginx_conf_ssl_trusted_certificate: "/etc/letsencrypt/live/{{ galaxy_instance_certname }}/fullchain.pem"
 
 gxadmin_dir: "/opt/gxadmin"
 gxadmin_bin_dir: "/usr/bin"

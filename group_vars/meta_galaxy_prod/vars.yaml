@@ -10,8 +10,10 @@ galaxy_gxit_proxy_port: 8910
 
 galaxy_user: cfdecloud
 galaxy_instance_codename: prod
-galaxy_instance_hostname: cfdeworkspace.org
+galaxy_instance_hostname: galaxy.cfdeworkspace.org
+galaxy_instance_certname: cfdeworkspace.org
 galaxy_instance_redirect_hostnames:
+  - cfdeworkspace.org
   - www.cfdeworkspace.org
   - cfdecloud.org
   - www.cfdecloud.org

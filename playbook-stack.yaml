@@ -90,12 +90,12 @@
         - archive
     - name: Copy private key
       ansible.builtin.copy:
-        src: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/privkey.pem"
+        src: "/etc/letsencrypt/live/{{ galaxy_instance_certname }}/privkey.pem"
         dest: "/etc/rabbitmq/privkey.pem"
         remote_src: true
-        owner: rabbitmq
+        owner: root
         group: rabbitmq
-        mode: "0600"
+        mode: "0640"
       # Ok to fail the first time (user does not exist yet), just run the play twice
       ignore_errors: true
   roles:
@@ -108,7 +108,7 @@
         user: root
         hour: 0
         minute: 0
-        job: if [ /etc/letsencrypt/live/{{ galaxy_instance_hostname }}/privkey.pem -nt /etc/rabbitmq/privkey.pem ]; then /bin/cp -p /etc/letsencrypt/live/{{ galaxy_instance_hostname }}/privkey.pem /etc/rabbitmq/privkey.pem && chown rabbitmq:rabbitmq /etc/rabbitmq/privkey.pem && systemctl restart rabbitmq-server; fi
+        job: if [ /etc/letsencrypt/live/{{ galaxy_instance_certname }}/privkey.pem -nt /etc/rabbitmq/privkey.pem ]; then /bin/cp -p /etc/letsencrypt/live/{{ galaxy_instance_certname }}/privkey.pem /etc/rabbitmq/privkey.pem && chown root:rabbitmq /etc/rabbitmq/privkey.pem && systemctl restart rabbitmq-server; fi
   tags:
     - rabbitmq
 

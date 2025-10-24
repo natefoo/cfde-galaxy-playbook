@@ -17,9 +17,9 @@ rabbitmq_config:
     ssl:
       default: 5671
   ssl_options:
-    cacertfile: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/fullchain.pem"
-    certfile: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/cert.pem"
-    #keyfile: "/etc/letsencrypt/live/{{ galaxy_instance_hostname }}/privkey.pem"
+    cacertfile: "/etc/letsencrypt/live/{{ galaxy_instance_certname }}/fullchain.pem"
+    certfile: "/etc/letsencrypt/live/{{ galaxy_instance_certname }}/cert.pem"
+    #keyfile: "/etc/letsencrypt/live/{{ galaxy_instance_certname }}/privkey.pem"
     keyfile: "/etc/rabbitmq/privkey.pem"
     verify: verify_peer
     fail_if_no_peer_cert: false

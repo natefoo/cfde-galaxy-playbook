@@ -100,7 +100,7 @@ cvmfs_role: client
 galaxy_cvmfs_repos_enabled: true
 
 pulsar_amqp_credentials: "prod_pulsar:{{ pulsar_amqp_password }}"
-pulsar_amqp_server: cfdeworkspace.org
+pulsar_amqp_server: galaxy.cfdeworkspace.org
 pulsar_amqp_vhost: /prod_pulsar
 pulsar_message_queue_url: "amqp://{{ pulsar_amqp_credentials }}@{{ pulsar_amqp_server }}:5671/{{ pulsar_amqp_vhost }}?ssl=1"
 

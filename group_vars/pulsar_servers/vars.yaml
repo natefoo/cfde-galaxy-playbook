@@ -2,7 +2,7 @@
 
 pulsar_amqp_credentials: "{{ vault_pulsar_amqp_credentials }}"
 
-pulsar_amqp_server: cfdeworkspace.org
+pulsar_amqp_server: galaxy.cfdeworkspace.org
 pulsar_message_queue_url: "amqp://{{ pulsar_amqp_credentials }}@{{ pulsar_amqp_server }}:5671//prod_pulsar?ssl=1"
 
 pulsar_optional_dependencies:

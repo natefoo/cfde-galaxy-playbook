@@ -9,6 +9,7 @@ Install Ansible and dependencies:
 ```console
 $ python3 -m venv ansible
 $ . ./ansible/bin/activate
+$ python3 -m pip install -r requirements.txt
 $ make requirements
 ```
 

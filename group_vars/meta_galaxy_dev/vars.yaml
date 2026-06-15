@@ -36,12 +36,14 @@ galaxy_config:
       - bind: "{{ galaxy_config_gunicorn_bind[0] }}"
         workers: 1
         timeout: 600
+        restart_timeout: 900
         preload: true
         environment:
           HDF5_USE_FILE_LOCKING: "FALSE"
       - bind: "{{ galaxy_config_gunicorn_bind[1] }}"
         workers: 1
         timeout: 600
+        restart_timeout: 900
         preload: true
         environment:
           HDF5_USE_FILE_LOCKING: "FALSE"

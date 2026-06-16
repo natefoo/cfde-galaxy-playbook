@@ -13,6 +13,9 @@ stack: sudo
 galaxy: sudo
 	ansible-playbook -i inventory/cfde.yaml playbook-galaxy.yaml --limit=$(HOSTNAME) $(ARGS)
 
+galaxy-config: sudo
+	ansible-playbook -i inventory/cfde.yaml playbook-galaxy-config.yaml --limit=$(HOSTNAME) $(ARGS)
+
 pulsar:
 	ansible-playbook -i inventory/cfde.yaml playbook-pulsar.yaml $(ARGS)
 

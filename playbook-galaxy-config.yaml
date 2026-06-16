@@ -1,0 +1,44 @@
+---
+# Install/Manage Galaxy
+
+- name: Galaxy
+  hosts: galaxy_servers
+  pre_tasks:
+    - name: Create local tools dir
+      file:
+        path: "{{ galaxy_local_tools_dir }}"
+        state: directory
+        mode: "0755"
+      when: galaxy_local_tools is defined
+    - name: Create panel_views dir
+      file:
+        path: "{{ galaxy_config.galaxy.panel_views_dir }}"
+        state: directory
+        mode: "0755"
+    - name: Create additional directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      become: true
+      become_user: "{{ galaxy_user }}"
+      loop:
+        - "{{ galaxy_shared_rw_root }}/tmp/apptainer_cache"
+        - "{{ galaxy_shared_rw_root }}/tmp/apptainer_tmp"
+  roles:
+    - role: galaxyproject.galaxy.config
+      tags: config
+    - role: galaxyproject.galaxy.state
+      become_user: "{{ galaxy_user_name }}"
+  post_tasks:
+    - name: Copy welcome.html
+      ansible.builtin.copy:
+        src: files/galaxy/static/welcome.html
+        dest: "{{ galaxy_static_dir }}/welcome.html"
+        mode: "0644"
+      tags: welcome
+  handlers:
+    - name: Galaxy restart no-op
+      ansible.builtin.debug:
+        msg: "No-op Galaxy restart handler, Galaxy has not been restarted"
+      listen: "restart galaxy"

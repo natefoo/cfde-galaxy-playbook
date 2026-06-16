@@ -90,6 +90,20 @@
         virtualenv: "{{ job_execution_venv }}"
       become_user: "{{ galaxy_user }}"
 
+    - name: Slurp data_fetch.py
+      ansible.builtin.slurp:
+        src: "{{ galaxy_server_dir }}/lib/galaxy/tools/data_fetch.py"
+      register: __galaxy_data_fetch_tool_src
+
+    - name: Install galaxy-data-fetch tool
+      ansible.builtin.copy:
+        content: |
+          #!{{ job_execution_venv }}/bin/python3
+          {{ __galaxy_data_fetch_tool_src['content'] | b64decode }}
+        dest: "{{ job_execution_venv }}/bin/galaxy-data-fetch"
+        mode: "0755"
+      become_user: "{{ galaxy_user }}"
+
     - name: Copy welcome.html
       ansible.builtin.copy:
         src: files/galaxy/static/welcome.html

@@ -264,3 +264,13 @@ tools:
       require:
       - pulsar
       - ls6
+
+  # overrides to avoid LS6
+
+  toolshed.g2.bx.psu.edu/repos/devteam/fastqc/fastqc/.*:
+    cores: 4
+    mem: 7
+
+  toolshed.g2.bx.psu.edu/repos/iuc/sra_tools/fasterq_dump/.*:
+    cores: 4
+    mem: 14

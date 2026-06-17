@@ -1,5 +1,9 @@
 ---
 
+# FIXME: these are for a hack to get `lib/galaxy/` tools that have wrapper scripts working for now
+galaxy_server_dir: "{{ galaxy_local_ro_root }}/server"
+galaxy_venv_dir: "{{ galaxy_local_ro_root }}/venv"
+
 docker_install_compose_plugin: false
 docker_install_compose: false
 docker_users:

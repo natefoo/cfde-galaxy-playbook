@@ -25,3 +25,38 @@
         mode: "0755"
         owner: root
         group: root
+
+# FIXME: this is all a hack to get `lib/galaxy/` tools that have wrapper scripts working for now
+- name: Galaxy
+  hosts: galaxy_workers
+  tasks:
+    - name: Add worker to meta_galaxy_dev for vars
+      ansible.builtin.add_host:
+        name: "{{ inventory_hostname }}"
+        groups: meta_galaxy_dev
+    - name: Create a venv for makepyc (dev)
+      ansible.builtin.pip:
+        name: pip
+        virtualenv: "{{ galaxy_venv_dir }}"
+        virtualenv_command: "{{ pip_virtualenv_command }}"
+    - name: Clone Galaxy (dev)
+      ansible.builtin.import_role:
+        name: galaxyproject.galaxy.clone
+    - name: Add worker to meta_galaxy_prod for vars
+      ansible.builtin.add_host:
+        name: "{{ inventory_hostname }}"
+        groups: meta_galaxy_prod
+    - name: Create a venv for makepyc (prod)
+      ansible.builtin.pip:
+        name: pip
+        virtualenv: "{{ galaxy_venv_dir }}"
+        virtualenv_command: "{{ pip_virtualenv_command }}"
+    - name: Clone Galaxy (prod)
+      ansible.builtin.import_role:
+        name: galaxyproject.galaxy.clone
+  handlers:
+    - name: Galaxy restart no-op
+      ansible.builtin.debug:
+        msg: "No-op Galaxy restart handler, Galaxy has not been restarted"
+      listen: "restart galaxy"
+  tags: galaxy

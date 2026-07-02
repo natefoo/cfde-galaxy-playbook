@@ -6,8 +6,28 @@ galaxy_db_servers_group_systemd_overrides:
     override:
       Restart: "always"
 
-postgresql_objects_users:
-  - name: "{{ galaxy_user }}"
+postgresql_objects_users: "{{ [{'name': galaxy_user}] + (vault_galaxy_db_readers | default([])) }}"
+
+postgresql_objects_groups:
+  - name: galaxy_readers
+    users: "{{ vault_galaxy_db_readers | default([]) }}"
+
+postgresql_objects_privileges:
+  - database: "galaxy_{{ galaxy_instance_codename }}"
+    roles: galaxy_readers
+    type: database
+    privs: CONNECT
+  - database: "galaxy_{{ galaxy_instance_codename }}"
+    roles: galaxy_readers
+    type: schema
+    objs: public
+    privs: USAGE
+  - database: "galaxy_{{ galaxy_instance_codename }}"
+    roles: galaxy_readers
+    schema: public
+    type: table
+    objs: ALL_IN_SCHEMA
+    privs: SELECT
 
 postgresql_objects_databases:
   - name: "galaxy_{{ galaxy_instance_codename }}"

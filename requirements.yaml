@@ -40,4 +40,4 @@ collections:
   #  version: 1.0.1
   - name: https://github.com/jdavcs/ansible-collection-galaxy
     type: git
-    version: client_update_detailed
+    version: cfde

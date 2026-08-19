@@ -6,7 +6,7 @@
   doc: MoTrPAC data access via GCS service account
   project: cfde-data-access
   bucket_name: motrpac-data-transfer-cloud-workspace
-  service_account_json: {{ galaxy_config_dir }}/cfde-data-access-fdaf817cf042.json
+  service_account_json: {{ galaxy_shared_ro_dir }}/config/cfde-data-access-fdaf817cf042.json
   anonymous: false
 
 - type: googlecloudstorage
@@ -15,7 +15,7 @@
   doc: MoTrPAC raw data files
   project: cfde-data-access
   bucket_name: motrpac-data-raw-pass1b-06
-  service_account_json: {{ galaxy_config_dir }}/cfde-data-access-fdaf817cf042.json
+  service_account_json: {{ galaxy_shared_ro_dir }}/config/cfde-data-access-fdaf817cf042.json
   anonymous: false
 
 - type: ftp

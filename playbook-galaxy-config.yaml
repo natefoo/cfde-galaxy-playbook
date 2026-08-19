@@ -19,12 +19,13 @@
       file:
         path: "{{ item }}"
         state: directory
-        mode: "0755"
+        mode: "0750"
       become: true
       become_user: "{{ galaxy_user }}"
       loop:
         - "{{ galaxy_shared_rw_root }}/tmp/apptainer_cache"
         - "{{ galaxy_shared_rw_root }}/tmp/apptainer_tmp"
+        - "{{ galaxy_shared_ro_root }}/config"
   roles:
     - role: galaxyproject.galaxy.config
       tags: config

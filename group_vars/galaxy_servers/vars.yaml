@@ -127,7 +127,7 @@ galaxy_config_files:
   - src: files/galaxy/config/tool_conf.xml
     dest: "{{ galaxy_config_dir }}/tool_conf.xml"
   - src: files/galaxy/config/cfde-data-access-fdaf817cf042.json
-    dest: "{{ galaxy_config_dir }}/cfde-data-access-fdaf817cf042.json"
+    dest: "{{ galaxy_shared_ro_dir }}/config/cfde-data-access-fdaf817cf042.json"
   - src: files/galaxy/config/panel_views/
     dest: "{{ galaxy_config.galaxy.panel_views_dir }}"
   # FIXME: this only works because we run the playbook on the server

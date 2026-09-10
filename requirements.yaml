@@ -36,8 +36,5 @@ collections:
   - name: community.general
   - name: galaxyproject.general
     version: 1.4.1
-  #- name: galaxyproject.galaxy
-  #  version: 1.0.1
-  - name: https://github.com/jdavcs/ansible-collection-galaxy
-    type: git
-    version: cfde
+  - name: galaxyproject.galaxy
+    version: 1.1.0
